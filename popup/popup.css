@@ -1,0 +1,54 @@
+
+body{
+    background:  #b8b6b6; 
+    box-shadow:  0 0 15px -1px rgba(0, 0, 0, 0.3);   
+
+}
+#main {
+    margin: auto;
+    padding: 10px;
+    background:  #ffffff;
+    border: 1px solid #aaa;
+    max-width: 370px;
+    width: 370px;
+    display: grid;
+    align-items: center;
+}
+
+#buttons{
+    padding: 10px;
+    display: inline-flex;
+    margin: auto;
+   
+}
+a{
+    border-radius: 8px;
+    margin:10px;
+    text-decoration: none;
+    padding: 8px 10px;
+    background-color: #0576d8;
+    color: #fff;
+    cursor:pointer;
+    box-shadow: 0 0 8px #d3d2d2;
+}
+.yellow{
+    background: darkred;
+
+}
+
+#info p{
+    padding: 4px 5px;
+
+}
+#total-words-stored{
+    background: rgb(219, 219, 215);
+    padding: 1px 5px;
+
+}
+#longest-words{
+    background: rgb(218, 216, 216);
+    color: #000000;
+    padding: 3px 6px;
+    text-transform: capitalize;
+
+}

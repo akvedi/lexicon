@@ -1,0 +1,120 @@
+.audio-btn{
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: 8px;
+    opacity: .5;
+    width: 16px;
+    display: inline-block
+}
+.span-playing{
+    font-size: 12px;
+    font-style: italic;
+    background-image: none !important;
+}
+span:hover {
+    opacity: 1
+}
+
+body{
+    background: #eee;
+}
+
+#main{
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.def{
+    background:  #fff;
+    display: grid;
+    grid-template-columns: 30% 60%;
+    margin: 10px;
+    justify-content: center;
+    align-items: baseline;
+    border: 1px solid #aaa;
+}
+
+#content{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.word{
+    flex-basis: 100px;
+    background: #fff;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 40px;
+    height: 50px;
+    margin: 0;
+    text-transform: capitalize;
+}
+.word:hover{
+    background: rgba(255, 253, 253, 0.438);
+}
+
+ul{
+    text-align: start;
+}
+h4{
+    display: flex;
+}
+
+#mean{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #0008;
+    width: 100vw;
+    height: 100vh;
+    position:fixed;
+    top:0;
+    left: 0;
+}
+#means{
+    background: #fff;
+    position: fixed;
+    padding: 20px 40px;
+    max-width: 400px;
+    /* width: 400px; */
+    border: 1px solid #aaa;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.close-btn{
+    position:absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    background: #a30303;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+li:not(:last-child){
+    border-bottom: 1px solid #ccc;
+}
+li{
+    padding: 10px 0;
+}
+
+#lang-filter {
+    border: 2px solid #1661b0;
+    padding: 5px 10px;
+    border-radius: 0;
+    font-size: 15px;
+    background: #fff;
+}
+#no-word-found{
+    margin: 40px auto;
+    background: #fff;
+    width: max-content;
+    padding: 30px;
+    border: 1px solid #aaa;
+}

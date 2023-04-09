@@ -1,0 +1,84 @@
+#light{
+    background: #eeeeee;
+}
+#content{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 600px;
+    max-width: 600px;
+    border: 1px solid #aaa;
+    background: #fff;
+    margin: auto;
+    padding: 30px;
+}
+
+form{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    row-gap: 30px;
+}
+
+#submit-btn {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+h3{
+    margin:  0;
+}
+
+#save-status {
+	background-color: #fe3;
+	margin-left: 20px;
+	opacity: 0;
+	padding: 2px 10px;
+}
+
+.stored-words p{
+    background: #eee;
+    padding: 5px 8px;
+    width: max-content;
+    border:1px solid #aaa
+}
+
+/*========== 
+* Buttons
+===========*/
+.btn {
+    background: #e0e0e3;
+	border: 0;
+	border-radius: 3px;
+	cursor: pointer;
+	padding: 8px 15px;
+    user-select: none;
+	-webkit-user-select: none;
+}
+
+.btn-danger{
+	background: rgb(196, 5, 5);
+	color: #fff;
+}
+
+.btn-primary {
+	background-color: #337ab7;
+	color: #fff
+}
+
+.btn-danger:hover, .btn-primary:hover, .btn:hover{
+	opacity: 0.6;
+}
+
+/*========== 
+* Dark Mode
+===========*/
+
+#dark, #dark #content, #dark h3, #dark p, #dark span, #dark label{
+	background: #222;
+    color: #fff;
+}
+#dark #save-status {
+    color: #000;
+    background: goldenrod;
+}
+#dark .stored-words p {
+    background: #78670e;
+}

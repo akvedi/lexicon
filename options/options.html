@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body id="light">
+    <div id="content">
+        <h2 id="title">Extension Options</h2>
+        <form name="options-form" action="">
+
+            <h3>Language:</h3>
+            <div class="">
+                <select id="language-selector">
+                    <option value="en">English (US)</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="es">Spanish</option>
+                    <option value="hi">Hindi</option>
+                </select>
+                <span id="to-language">to English</span>
+                
+            </div>
+
+            <h3 class="option-name">Theme:</h3>
+            <div>
+                <select id="theme-selector">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+
+            <h3>Trigger action:</h3>
+            <div>
+                <select  name="trigger-key" id="trigger-key">
+                    <option value="none">Only Double Click</option>
+                    <option value="ctrl" id="trigger-key-ctrl">Ctrl + Double Click</option>
+                    <option value="alt" id="trigger-key-alt">Alt + Double Click</option>
+                    <option value="shift" id="trigger-key-shift">Shift + Double Click</option>
+                    <option value="rightclick" id="trigger-key-right-click">Highlight and right click</option>
+                </select>
+            </div>
+
+            <h3>Number of Definitions:</h3>
+            <div>
+                <select name="num-of-def" id="num-of-def">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <label for="num-of-def">Select maximum number of definitions to show</label>
+            </div>
+
+            <h3>Word history:</h3>
+            <div>
+                <div class="option-value-primary">
+                    <input type="checkbox" name="store-history-checkbox" id="store-history-checkbox">
+                    <label for="store-history-checkbox">Store Words And Definitions</label>
+                </div>
+                <div class="stored-words">
+                    <p>Total <strong><span id="num-words-in-history">0</span></strong> words stored</p>
+                </div>
+                <div class="option-value-primary">
+                    <button id="download-history-btn" class="btn ">
+                    Download history
+                    </button>
+                    <a href="#" id="download-history-link"
+                    download="word-history.json">
+                    </a>
+                    <button id="clear-history-btn" class="btn btn-danger">
+                        Clear history
+                    </button>
+                </div>
+            </div>
+
+            <div id="submit-btn">
+                <button id="save-btn" class="btn btn-primary">Save</button>
+                <button id="reset-btn" class="btn  btn-danger">Reset</button>
+                <span id="save-status">Options saved</span>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="../common/browser-polyfill.js"></script>
+    <script type="text/javascript" src="options.js"></script>
+</body>
+</html>

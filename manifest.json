@@ -1,0 +1,54 @@
+{
+  "author": "akvedi",
+
+  "manifest_version": 2,
+  "name": "Lexicon",
+  "version": "1.1.0",
+
+  "description": "Quickly Define Words While You Browse By Just Double Clicking On The Word",
+
+  "icons": {
+    "48": "icons/lexicon128.png",
+    "64": "icons/lexicon128.png",
+    "96": "icons/lexicon128.png",
+    "128": "icons/lexicon128.png"
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true,
+    "chrome_style": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "common/browser-polyfill.js",
+        "content_scripts/dictionary.js"
+      ]
+    }
+  ],
+
+  "background": {
+    "scripts": [
+      "common/browser-polyfill.js",
+      "background/background.js"
+    ],
+    "persistent": false
+  },
+
+  "permissions": [
+    "storage",
+    "https://www.google.com/",
+    "contextMenus",
+    "activeTab"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/lexicon128.png"
+    },
+    "browser_style": true,
+    "default_popup": "popup/popup.html"
+  }
+}

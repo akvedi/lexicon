@@ -1,0 +1,69 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2022 Aaditya Dwivedi
+
+Everyone is permitted to copy and distribute verbatim or modified copies of this license document, and changing it is allowed as long as the name is changed.
+
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. Definitions.
+
+"License" shall mean the terms and conditions for copying, distribution and modification as defined by Sections 1 through 9 of this document.
+
+"Copyright Holder" shall mean the original author or authors of the Work.
+
+"Contributor" shall mean any person or entity that distributes the Work.
+
+"Work" shall mean the software program(s) or other work(s) specified in the copyright notice attached to the Work under the terms of this License.
+
+"Derivative Works" shall mean any work, whether in source or object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+
+"Object Code" shall mean any non-source form of a Work.
+
+"Source Code" shall mean the preferred form of the Work for making modifications to it.
+
+1. Scope.
+
+The license is granted to any person or entity that uses, modifies, or distributes the Work, under the terms of this License, provided that:
+
+- The copyright notice and license information is included in all copies of the Work, including any Derivative Works.
+- All recipients of the Work or Derivative Works are given a copy of this License.
+- Any modifications to the Work are released under the terms of this License.
+
+2. Verbatim Copying.
+
+You may copy and distribute verbatim copies of the Work, in any medium, provided that:
+
+- The copyright notice and license information is included in all copies of the Work.
+
+3. Modified Copies.
+
+You may modify the Work and distribute it under the terms of this License, provided that:
+
+- The modified version includes the copyright notice and license information.
+- Any Derivative Works that you distribute must be licensed under the terms of this License.
+
+4. Combining Works.
+
+You may combine the Work with other works to create a larger work, and distribute the larger work under the terms of this License, provided that:
+
+- You comply with the terms of this License for the Work and any Derivative Works thereof.
+- You include a notice in the larger work stating that it is a derivative work of the Work, and identify the original copyright holders.
+
+5. Object Code.
+
+You may convey the Object Code in any medium, provided that:
+
+- You also convey the Source Code in the same medium, if it is available.
+- You include a notice in the Object Code stating that it is derived from the Work.
+
+6. Attribution.
+
+You must give appropriate credit to the copyright holder(s) of the Work, and provide a link to the license.
+
+7. Disclaimer of Warranty.
+
+The Work is provided "AS IS" and WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
+
+Extension Name: Lexicon
