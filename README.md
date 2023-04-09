@@ -1,5 +1,5 @@
 <h1 align="center"><sub>
-<img  src="./icons/Dictionary-64.png" height="38" width="38">
+<img  src="./icons/lexicon128.png" height="38" width="38">
 </sub><strong>Lexicon</strong></h1>
 
 **An efficiant Dictionary add-on for Firefox** (availble soon for chrome and edge )
@@ -49,4 +49,4 @@ This tool is under active development. To get involved you can watch the repo, f
 
 ## License
 ---
-[GPLv3][License]
+[GPLv3](./LICENSE)
