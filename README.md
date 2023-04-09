@@ -2,7 +2,7 @@
 <img  src="./icons/Dictionary-64.png" height="38" width="38">
 </sub><strong>Lexicon</strong></h1>
 
-**A efficiant Dictionary add-on for Firefox** (availble soon for chrome and edge )
+**An efficiant Dictionary add-on for Firefox** (availble soon for chrome and edge )
 
 * Quickly Define Words While You Browse By Just Double Clicking
 * Effortlessly Expand Your Vocabulary
