@@ -15,7 +15,7 @@
 
 ***
 <p align="center">
-<a href="https://addons.mozilla.org/addon/#"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get Lexicon for Firefox"></a>
+<a href="https://addons.mozilla.org/addon/lexicon/"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Get Lexicon for Firefox"></a>
 </p> 
 
 ***
