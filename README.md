@@ -7,6 +7,7 @@
 * Quickly Define Words While You Browse By Just Double Clicking
 * Effortlessly Expand Your Vocabulary
 * Create and Organize Your Own Word Bank With Personal Dictionary
+* Learn to Pronounce with Pronunciation Support
 * Memorize Effortlessly with Flash Cards _(Availble Soon)_
 * Language Switcher To Qucickly Switch Between Languages
 
@@ -32,6 +33,8 @@ Lexicon extension for Firefox makes reading a breeze! No more interruptions to s
     * Hightlight and Right Click
 * Multiple Definitions Upto 5
 * Word history
+* Pronunciation Support
+* Download word history as JSON
 * Multilingual support
     * English
     * French 
@@ -40,6 +43,7 @@ Lexicon extension for Firefox makes reading a breeze! No more interruptions to s
     * Hindi
 * Dark Mode
 * Fast and lightweight
+
 
 
 
