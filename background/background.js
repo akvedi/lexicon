@@ -38,7 +38,7 @@ function fetchUrl(lang, word){
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
-    return url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
+    return url = `https://www.google.com/search?hl=${lang}&q=define+${word.replace(/·/g, '')}&gl=US`;
 }
 
 /**
@@ -54,20 +54,24 @@ function extractMeaning (document, context){
         definitionDiv = document.querySelectorAll("div[data-dobid='dfn']"),
         meaningHtml = "",
         meaningJson = {word: context.word},
-        i = 1;
+        j = 1;
 
     if(definitionDiv){
         definitionDiv.forEach((def)=>{
-            let span = def.querySelector("span");
+            let span = def.querySelectorAll("span");
 
-            if(!span.querySelector("sup")){
-                meaningJson[`meaning${i}`] =  span.innerText;
-
-                if(i <= context.numOfDef){
-                    meaningHtml += `<li>${span.innerText}</li>`;
+            //loop over span, extract the innerText and join it to make single string and add it to meaningJson
+            let defnition = "";
+            for(let i = 0; i < span.length; i++){
+                if(!span[i].querySelector("sup")){
+                    defnition += span[i].innerHTML;
                 }
-                i++;
             }
+            meaningJson[`meaning${j}`] =  defnition;
+            if(j <= context.numOfDef){
+                meaningHtml += `<li>${meaningJson[`meaning${j}`]}</li>`;
+            }
+            j++;
             
         });
     }
