@@ -64,7 +64,7 @@ function extractMeaning (document, context){
             let defnition = "";
             for(let i = 0; i < span.length; i++){
                 if(!span[i].querySelector("sup")){
-                    defnition += span[i].innerHTML;
+                    defnition += (span[i].innerHTML).replace(/(<([^>]+)>)/ig, "");
                 }
             }
             meaningJson[`meaning${j}`] =  defnition;
