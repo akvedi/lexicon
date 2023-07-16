@@ -2,7 +2,8 @@ var DEFAULT_LANGUAGE = 'en',
     DEFAULT_THEME = 'light',
     DEFAULT_TRIGGER_KEY = 'none',
     SEARCHWORD,
-    SUPPORTED_LANGUAGE = {"en":"English", "fr":"French", "de":"German", "es":"Spanish", "hi":"Hindi"},
+    SUPPORTED_LANGUAGE = {"en":"English", "fr":"French", "de":"German", "es":"Spanish", "hi":"Hindi", "pt":"Portuguese", "pt-br": "Brazilian Portuguese"},
+    COUNTRY_CODE = {"en":"US", "fr":"FR", "de":"DE", "es":"ES", "hi":"IN", "pt":"PT", "pt-br":"BR"},
     LANGUAGE,
     NUMOFDEF,
     THEME,
@@ -76,7 +77,7 @@ function getSelectionInfo(event) {
     * @returns 
     */
 function retrieveMeaning(lang){
-    return browser.runtime.sendMessage({ word: SEARCHWORD, lang: lang, time: Date.now(), numOfDef: NUMOFDEF });
+    return browser.runtime.sendMessage({ word: SEARCHWORD, countryCode: COUNTRY_CODE[lang], lang: lang, time: Date.now(), numOfDef: NUMOFDEF });
 }
 
 /**

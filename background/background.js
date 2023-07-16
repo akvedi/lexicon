@@ -2,9 +2,9 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
     DEFAULT_HISTORY_SETTING = {enabled: true};
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    let { word, lang, numOfDef } = request;
+    let { word, lang, numOfDef, countryCode } = request;
         
-    const url = fetchUrl(lang, word);
+    const url = fetchUrl(lang, word, countryCode);
     
     fetch(url, { 
             method: 'GET',
@@ -33,12 +33,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
  * @param {string} word - the word to search
  * @returns {string} - url to fetch 
  */
-function fetchUrl(lang, word){
+function fetchUrl(lang, word, countryCode){
     let url = '';
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
-    return url = `https://www.google.com/search?hl=${lang}&q=define+${word.replace(/·/g, '')}&gl=US`;
+    console.log(countryCode);
+    return url = `https://www.google.com/search?hl=${lang}&q=define+${word.replace(/·/g, '')}&gl=${countryCode}`;
 }
 
 /**
