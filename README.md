@@ -41,6 +41,8 @@ Lexicon extension for Firefox makes reading a breeze! No more interruptions to s
     * German
     * Spanish
     * Hindi
+    * Brazilian portuguese
+    * Portuguese
 * Dark Mode
 * Fast and lightweight
 
