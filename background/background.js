@@ -38,7 +38,7 @@ function fetchUrl(lang, word, countryCode){
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
-    console.log(countryCode);
+
     return url = `https://www.google.com/search?hl=${lang}&q=define+${word.replace(/·/g, '')}&gl=${countryCode}`;
 }
 
@@ -132,13 +132,13 @@ async function saveWord (content) {
 * Context Menu
 */
 browser.contextMenus.create({
-    id: "dictionary-anywhere-selection",
+    id: "lexicon-selection",
     title: "Look up '%s' in Dictionary",
     contexts: ["selection"]
 });
 
 browser.contextMenus.onClicked.addListener(function (info, tab) {
-    if (info.menuItemId === "dictionary-anywhere-selection") {
+    if (info.menuItemId === "lexicon-selection") {
         const code = `showMeaning({});`;
 
         browser.tabs.executeScript({

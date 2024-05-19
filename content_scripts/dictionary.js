@@ -240,6 +240,9 @@ function appendToDiv(createdDiv, content){
             sound.play();
         });
     }
+
+    // Show language switcher at the bottom of the popup
+    showLangSwitcher(createdDiv, LANGUAGE);
 }
 
 /**
@@ -248,7 +251,7 @@ function appendToDiv(createdDiv, content){
     */
 function noMeaningFound (createdDiv, language){
     createdDiv.heading.textContent = "Sorry";
-    createdDiv.meaning.textContent = `No definition found in ${SUPPORTED_LANGUAGE[language]} To switch language click on the language switcher in the corner`;
+    createdDiv.meaning.textContent = `No definition found in ${SUPPORTED_LANGUAGE[language]}. To search in different language select from below options`;
     showLangSwitcher(createdDiv, language);
 }
 
