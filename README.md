@@ -56,3 +56,16 @@ This tool is under active development. To get involved you can watch the repo, f
 ## License
 ---
 [GPLv3](./LICENSE)
+
+
+
+---
+
+## Changelog 1.4.0 
+
+* Added Dark Mode support for Popup and Personal Dicitionary.
+* Introduced a System Option for theme customization.
+* Resolved an issue where the definition popup extended beyond the screen.
+* Added autoplay functionality for pronunciation.
+
+> Thanks to <a href="https://github.com/DenB10">@DenB10</a> for adding dark mode to personal dictionary and system theme support.
