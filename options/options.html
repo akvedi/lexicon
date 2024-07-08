@@ -26,7 +26,8 @@
             <h3 class="option-name">Theme:</h3>
             <div>
                 <select id="theme-selector">
-                    <option value="light">Light</option>
+                    <option value="system">System</option>
+                    <option value="light" selected>Light</option>
                     <option value="dark">Dark</option>
                 </select>
             </div>
@@ -38,7 +39,15 @@
                     <option value="ctrl" id="trigger-key-ctrl">Ctrl + Double Click</option>
                     <option value="alt" id="trigger-key-alt">Alt + Double Click</option>
                     <option value="shift" id="trigger-key-shift">Shift + Double Click</option>
-                    <option value="rightclick" id="trigger-key-right-click">Highlight and right click</option>
+                    <option value="rightclick" id="trigger-key-right-click">Context Menu Only</option>
+                </select>
+            </div>
+
+            <h3>Autoplay Pronunciation</h3>
+            <div>
+                <select name="autoplay" id="autoplay">
+                    <option value="true">True</option>
+                    <option value="false" selected>False</option>
                 </select>
             </div>
 
@@ -46,8 +55,8 @@
             <div>
                 <select name="num-of-def" id="num-of-def">
                     <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option selected>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
@@ -82,6 +91,7 @@
                 <span id="save-status">Options saved</span>
             </div>
         </form>
+        <p>Upon clicking save or reset button the extension will refersh to load new changes.</p>
     </div>
     <script type="text/javascript" src="../common/browser-polyfill.js"></script>
     <script type="text/javascript" src="options.js"></script>

@@ -1,5 +1,6 @@
 const langKey = {"en":"English", "fr":"French", "de":"German", "es":"Spanish", "hi":"Hindi"};
-let DEF = [];
+let DEF = [],
+THEME;
 
 (async () => {
     let storageItem = await browser.storage.local.get();
@@ -12,6 +13,14 @@ let DEF = [];
 
     setFilterLang(DEF);
     outputhtml(DEF);
+})();
+(async ()=>{
+    let storageItem = await browser.storage.local.get();
+    THEME = storageItem.theme;
+    if(THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches){
+        return document.querySelector('body').id = 'dark';
+    }
+    return document.querySelector('body').id = 'light';
 })();
 
 document.getElementById("lang-filter").addEventListener("change", (e)=>{
@@ -45,7 +54,6 @@ const searchword =  lang => {
             const regex = new RegExp(`${lang}`, 'gi');
             return word.lang.match(regex);
         });
-        console.log(matches);
         outputhtml(matches); 
 }
 

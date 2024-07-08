@@ -33,13 +33,14 @@ function saveOptions(e) {
             enabled: document.querySelector("#store-history-checkbox").checked
         },
         theme: document.querySelector("#theme-selector").value,
+        autoplay: document.querySelector("#autoplay").value,
         numOfDef: document.querySelector("#num-of-def").value
 
     }).then(showSaveStatusAnimation);
     
     setTimeout(()=>{
      browser.runtime.reload();
-    }, 1500)
+    }, 500)
   
     e.preventDefault();
 }
@@ -58,6 +59,7 @@ function restoreOptions() {
             definitions = results.definitions || [],
             theme = results.theme,
             numOfDef = results.numOfDef;
+            autoplay = results.autoplay;
 
 
         // Restore language setting
@@ -67,6 +69,9 @@ function restoreOptions() {
         // Restore interaction setting
         document.querySelector("#trigger-key").value = (interaction.dblClick && interaction.dblClick.key) || DEFAULT_TRIGGER_KEY;
 
+        //Restore Autoplay option
+        document.querySelector("#autoplay").value = autoplay || "false";
+        
         // Restore number of definition to show
         document.querySelector("#num-of-def").value = numOfDef || "2";
 
@@ -121,7 +126,10 @@ function resetOptions (e) {
             history: {
                 enabled: IS_HISTORY_ENABLED_BY_DEFAULT
             },
-            theme: DEFAULT_THEME
+            theme: DEFAULT_THEME,
+        // Reset number of definitions to show
+            numOfDef: "2"
+
         }).then(restoreOptions);
     }
     e.preventDefault();
@@ -134,6 +142,7 @@ function resetOptions (e) {
 function clearHistory(e) {
     if(confirm("All of your word history will be cleared")){
         browser.storage.local.set({ definitions: [] });
+        browser.storage.local.set({ longestWord: "" }); 
         document.getElementById("num-words-in-history").innerText = "0";
     };
     e.preventDefault();
@@ -157,7 +166,7 @@ function showSaveStatusAnimation () {
  * @implements {theme}
  */
 function loadTheme(theme){
-    if(theme == 'dark'){
+    if(theme == 'dark' || (theme == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches){
         return document.querySelector('body').id = 'dark';
     }
     return document.querySelector('body').id = 'light';
