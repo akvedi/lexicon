@@ -13,7 +13,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .then((response) => response.text())
         .then((text) => {
             const document = new DOMParser().parseFromString(text, 'text/html'),
-                content = extractMeaning(document, { word, lang, numOfDef});
+                content = extractMeaning(document, { word, lang, numOfDef, url});
 
             sendResponse({ content });
 
@@ -35,6 +35,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
  */
 function fetchUrl(lang, word, countryCode){
     let url = '';
+    
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
@@ -99,7 +100,7 @@ function extractMeaning (document, context){
 
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
-    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, audioSrc: audioSrc, url: fetchUrl(context.lang, word), lang: context.lang};
+    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, audioSrc: audioSrc, url: context.url, lang: context.lang};
 };
 
 /**

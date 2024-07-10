@@ -28,6 +28,7 @@ function showMeaning (event){
         .then((response) => {                
             if (!response.content) { return noMeaningFound(createdDiv, LANGUAGE); }
             appendToDiv(createdDiv, response.content);
+            console.log(response.content);
         });
 
     // Creating this div while meaning is retrieved
@@ -150,6 +151,11 @@ function createDiv(info) {
     audio.innerHTML = "&nbsp;";
     audio.style.display = "none";
 
+    var sound = document.createElement("audio");
+    audio.appendChild(sound);
+    audio.addEventListener("click", function(){
+        sound.play();
+    });
 
     var moreInfo =document.createElement("a");
     moreInfo.style = "float: right; text-decoration: none;"
@@ -192,6 +198,7 @@ function createDiv(info) {
         meaning, 
         moreInfo, 
         audio,
+        sound,
         content,
     };
 
@@ -232,15 +239,12 @@ function appendToDiv(createdDiv, content){
     if(popupDiv.classList.contains("flipped_y")){
         hostDiv.style.top = parseInt(hostDiv.style.top) - difference + 1 + "px";
     }
+    
 
     if(content.audioSrc){
-        var sound = document.createElement("audio");
-        sound.src = content.audioSrc;
+        createdDiv.sound.src = content.audioSrc;
         createdDiv.audio.style.display  = "inline-block";
-        sound.autoplay = (AUTOPLAY === "true");
-        createdDiv.audio.addEventListener("click", function(){
-            sound.play();
-        });
+        createdDiv.audio.autoplay = (AUTOPLAY === "true");
     }
 
     // Show language switcher at the bottom of the popup
@@ -254,6 +258,7 @@ function appendToDiv(createdDiv, content){
 function noMeaningFound (createdDiv, language){
     createdDiv.heading.textContent = "Sorry";
     createdDiv.meaning.textContent = `No definition found in ${SUPPORTED_LANGUAGE[language]}. To search in different language select from below options`;
+    createdDiv.audio.remove();
     showLangSwitcher(createdDiv, language);
 }
 
@@ -308,7 +313,7 @@ document.addEventListener('dblclick', ((e) => {
 
 
 /**
- * Show a temporary language switcher in bottom corner if no definition found
+ * Show alanguage switcher in bottom corner
  * @param {object} obj - the object returned by createDiv function 
  */
 function showLangSwitcher(obj, lang){
@@ -318,10 +323,11 @@ function showLangSwitcher(obj, lang){
         langSwitcher.innerHTML+= `<option value="${key}">${SUPPORTED_LANGUAGE[key]}</option>`;
     };
     langSwitcher.querySelector(`[value="${lang}"]`).selected = true;
+
     obj.content.appendChild(langSwitcher);
 
     langSwitcher.addEventListener("change", (e)=>{ 
-        langSwitcher.style.display = "none";
+        langSwitcher.remove();
         return respondToLangSwitcher(e.target.value, obj);
     });
 }
@@ -334,6 +340,7 @@ function showLangSwitcher(obj, lang){
 async function respondToLangSwitcher(lang, obj){
     obj.heading.textContent = "Searching...";
     obj.meaning.textContent = `Looking for "${SEARCHWORD}" in ${SUPPORTED_LANGUAGE[lang]}`;
+    LANGUAGE = lang;
 
     let request = await retrieveMeaning(lang);
     if (!request.content) { return noMeaningFound(obj,lang);}

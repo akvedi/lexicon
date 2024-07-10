@@ -61,6 +61,16 @@ This tool is under active development. To get involved you can watch the repo, f
 
 ---
 
+## Changelog 1.5.0
+
+- **Language Persistence:** Language switcher now retains selected language on a per-page basis.  
+- **More Link Issue Fix:** Resolved an issue with the functionality of the "More" link.  
+- **Language Reversion Fix:** Addressed the issue where language settings reverted to default after switching.  
+- **Pronunciation Overlap Fix:** Fixed overlapping voices in pronunciation following a language switch.
+
+
+
+
 ## Changelog 1.4.0 
 
 * Added Dark Mode support for Popup and Personal Dicitionary.
