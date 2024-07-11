@@ -28,7 +28,7 @@ function showMeaning (event){
         .then((response) => {                
             if (!response.content) { return noMeaningFound(createdDiv, LANGUAGE); }
             appendToDiv(createdDiv, response.content);
-            console.log(response.content);
+            // console.log(response.content);
         });
 
     // Creating this div while meaning is retrieved
@@ -89,7 +89,7 @@ function retrieveMeaning(lang){
 function loadStyle(){
     let style = document.createElement("style");
 
-    style.textContent = ".mwe-popups{background:#fff;position:absolute;z-index:110;-webkit-box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;padding:0;font-size:14px;min-width:300px;border-radius:2px}.mwe-popups.mwe-popups-is-not-tall{width:320px}.mwe-popups .mwe-popups-container{color:#222;margin-top:-9px;padding-top:9px;text-decoration:none}.mwe-popups.mwe-popups-is-not-tall .mwe-popups-extract{min-height:40px;max-height:140px;overflow:hidden;margin-bottom:47px;padding-bottom:0}.mwe-popups .mwe-popups-extract{margin:16px;display:block;color:#222;text-decoration:none;position:relative}.mwe-popups.flipped_y:before{content:'';position:absolute;border:8px solid transparent;border-bottom:0;border-top:8px solid #a2a9b1;bottom:-8px;left:10px}.mwe-popups.flipped_y:after{content:'';position:absolute;border:11px solid transparent;border-bottom:0;border-top:11px solid #fff;bottom:-7px;left:7px}.mwe-popups.mwe-popups-no-image-tri:before{content:'';position:absolute;border:8px solid transparent;border-top:0;border-bottom:8px solid #a2a9b1;top:-8px;left:10px}.mwe-popups.mwe-popups-no-image-tri:after{content:'';position:absolute;border:11px solid transparent;border-top:0;border-bottom:11px solid #fff;top:-7px;left:7px}.audio{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);background-position:center;background-repeat:no-repeat;cursor:pointer;margin-left:8px;opacity:.5;width:16px;display:inline-block}.audio:hover{opacity:1}.mwe-popups.flipped_x:before{left:unset;right:10px}.mwe-popups.flipped_x:after{left:unset;right:7px}";
+    style.textContent = ".mwe-popups{background:#fff;position:absolute;z-index:110;-webkit-box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;padding:0;font-size:14px;min-width:300px;border-radius:2px}.mwe-popups.mwe-popups-is-not-tall{width:320px}.mwe-popups .mwe-popups-container{color:#222;margin-top:-9px;padding-top:9px;text-decoration:none}.mwe-popups.mwe-popups-is-not-tall .mwe-popups-extract{min-height:40px;max-height:140px;overflow:hidden;margin-bottom:47px;padding-bottom:0}.mwe-popups .mwe-popups-extract{margin:16px;display:block;color:#222;text-decoration:none;position:relative}.mwe-popups.flipped_y:before{content:'';position:absolute;border:8px solid transparent;border-bottom:0;border-top:8px solid #a2a9b1;bottom:-8px;left:10px}.mwe-popups.flipped_y:after{content:'';position:absolute;border:11px solid transparent;border-bottom:0;border-top:11px solid #fff;bottom:-7px;left:7px}.mwe-popups.mwe-popups-no-image-tri:before{content:'';position:absolute;border:8px solid transparent;border-top:0;border-bottom:8px solid #a2a9b1;top:-8px;left:10px}.mwe-popups.mwe-popups-no-image-tri:after{content:'';position:absolute;border:11px solid transparent;border-top:0;border-bottom:11px solid #fff;top:-7px;left:7px}.audio{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);background-position:center;background-repeat:no-repeat;cursor:pointer;margin-left:8px;opacity:.5;width:16px;display:inline-block}.audio:hover{opacity:1}.mwe-popups.flipped_x:before{left:unset;right:10px}.mwe-popups.flipped_x:after{left:unset;right:7px}.type{float:right; color:#aaa;}";
 
     if (THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches){
         style.textContent += ".mwe-popups{background:#1b1b1b}.mwe-popups .mwe-popups-container{color:#fff}.mwe-popups .mwe-popups-extract{color:#fff}.mwe-popups .mwe-popups-extract a{color:#0ff}.mwe-popups.flipped_y:before{border-top:8px solid #fff}.mwe-popups.flipped_y:after{border-top:11px solid #1b1b1b}.mwe-popups.mwe-popups-no-image-tri:before{border-bottom:8px solid #fff}.mwe-popups.mwe-popups-no-image-tri:after{border-bottom:11px solid #1b1b1b}.audio{opacity:.6;filter:invert(1)}";
@@ -151,11 +151,14 @@ function createDiv(info) {
     audio.innerHTML = "&nbsp;";
     audio.style.display = "none";
 
-    var sound = document.createElement("audio");
+    let sound = document.createElement("audio");
     audio.appendChild(sound);
     audio.addEventListener("click", function(){
         sound.play();
     });
+    
+    let type = document.createElement('p');
+    type.className = "type";
 
     var moreInfo =document.createElement("a");
     moreInfo.style = "float: right; text-decoration: none;"
@@ -163,6 +166,7 @@ function createDiv(info) {
 
     content.appendChild(heading);
     content.appendChild(audio);
+    content.appendChild(type);
     content.appendChild(meaning);
     content.appendChild(moreInfo);
     document.body.appendChild(hostDiv);
@@ -196,7 +200,8 @@ function createDiv(info) {
     return { 
         heading, 
         meaning, 
-        moreInfo, 
+        moreInfo,
+        type, 
         audio,
         sound,
         content,
@@ -230,6 +235,7 @@ function appendToDiv(createdDiv, content){
     createdDiv.meaning.innerHTML = content.meaning;
     createdDiv.moreInfo.textContent = "More »";
     createdDiv.moreInfo.href = content.url;
+    createdDiv.type.innerHTML = `<i>${content.type}</i>`
 
 
     var heightAfter = popupDiv.clientHeight;
@@ -244,7 +250,7 @@ function appendToDiv(createdDiv, content){
     if(content.audioSrc){
         createdDiv.sound.src = content.audioSrc;
         createdDiv.audio.style.display  = "inline-block";
-        createdDiv.audio.autoplay = (AUTOPLAY === "true");
+        createdDiv.sound.autoplay = (AUTOPLAY === "true");
     }
 
     // Show language switcher at the bottom of the popup
@@ -259,6 +265,7 @@ function noMeaningFound (createdDiv, language){
     createdDiv.heading.textContent = "Sorry";
     createdDiv.meaning.textContent = `No definition found in ${SUPPORTED_LANGUAGE[language]}. To search in different language select from below options`;
     createdDiv.audio.remove();
+    createdDiv.moreInfo.remove();
     showLangSwitcher(createdDiv, language);
 }
 
@@ -309,7 +316,6 @@ document.addEventListener('dblclick', ((e) => {
         TRIGGER_KEY = interaction.dblClick.key;
   
 })();
-
 
 
 /**

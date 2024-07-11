@@ -41,7 +41,8 @@ body{
     align-items: center;
     padding: 15px 40px;
     height: 50px;
-    margin: -1px;
+    margin: 2px;
+    border-radius: 8px;
     text-transform: capitalize;
     user-select: none;
     transition: 0.2s all ease;
@@ -75,6 +76,7 @@ h4{
     max-width: 400px;
     /* width: 400px; */
     border: 1px solid #aaa;
+    border-radius: 8px;
     box-shadow: 0 0 8px rgba(0,0,0,0.5);
     overflow: auto;
     height: fit-content;
@@ -123,6 +125,7 @@ li{
 
 #dark #no-word-found, #dark .word {
   background: #32313a;
+  border: 1px solid #555;
 }
 
 #dark .word:hover {

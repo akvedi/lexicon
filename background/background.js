@@ -35,12 +35,12 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
  */
 function fetchUrl(lang, word, countryCode){
     let url = '';
-    
+    let define = {"en":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
 
-    return url = `https://www.google.com/search?hl=${lang}&q=define+${word.replace(/·/g, '')}&gl=${countryCode}`;
+    return url = `https://www.google.com/search?hl=${lang}&q=${define[lang]}+${word.replace(/·/g, '')}&gl=${countryCode}`;
 }
 
 /**
@@ -57,6 +57,8 @@ function extractMeaning (document, context){
         meaningHtml = "",
         meaningJson = {word: context.word},
         j = 1;
+
+    let type = document.querySelector('div[class~="YrbPuc"]').textContent || "";
 
     if(definitionDiv){
         definitionDiv.forEach((def)=>{
@@ -100,7 +102,7 @@ function extractMeaning (document, context){
 
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
-    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, audioSrc: audioSrc, url: context.url, lang: context.lang};
+    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, type: type, audioSrc: audioSrc, url: context.url, lang: context.lang};
 };
 
 /**

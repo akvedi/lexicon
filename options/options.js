@@ -127,8 +127,9 @@ function resetOptions (e) {
                 enabled: IS_HISTORY_ENABLED_BY_DEFAULT
             },
             theme: DEFAULT_THEME,
-        // Reset number of definitions to show
-            numOfDef: "2"
+            // Reset number of definitions to show
+            numOfDef: "2", 
+            autoplay: "false"
 
         }).then(restoreOptions);
     }
