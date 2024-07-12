@@ -2,8 +2,8 @@ var DEFAULT_LANGUAGE = 'en',
     DEFAULT_THEME = 'light',
     DEFAULT_TRIGGER_KEY = 'none',
     SEARCHWORD,
-    SUPPORTED_LANGUAGE = {"en":"English", "fr":"French", "de":"German", "es":"Spanish", "hi":"Hindi", "pt":"Portuguese", "pt-br": "Brazilian Portuguese"},
-    COUNTRY_CODE = {"en":"US", "fr":"FR", "de":"DE", "es":"ES", "hi":"IN", "pt":"PT", "pt-br":"BR"},
+    SUPPORTED_LANGUAGE = { "en-US":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" },
+    COUNTRY_CODE = { "en": "UK", "en-US": "US", "fr": "FR", "de": "DE", "es": "ES", "hi": "IN", "pt": "PT", "pt-br": "BR" },
     LANGUAGE,
     NUMOFDEF,
     THEME,
@@ -16,7 +16,7 @@ var DEFAULT_LANGUAGE = 'en',
     * @param {event} event - Double click event
     * @returns 
     */
-function showMeaning (event){
+function showMeaning(event) {
     var createdDiv,
         info = getSelectionInfo(event);
 
@@ -25,7 +25,7 @@ function showMeaning (event){
     SEARCHWORD = info.word; // set the global variable 
 
     retrieveMeaning(LANGUAGE)
-        .then((response) => {                
+        .then((response) => {
             if (!response.content) { return noMeaningFound(createdDiv, LANGUAGE); }
             appendToDiv(createdDiv, response.content);
             // console.log(response.content);
@@ -78,7 +78,7 @@ function getSelectionInfo(event) {
     * @param {string} lang - language to search for
     * @returns 
     */
-function retrieveMeaning(lang){
+function retrieveMeaning(lang) {
     return browser.runtime.sendMessage({ word: SEARCHWORD, countryCode: COUNTRY_CODE[lang], lang: lang, time: Date.now(), numOfDef: NUMOFDEF });
 }
 
@@ -86,15 +86,15 @@ function retrieveMeaning(lang){
     * Load CSS based on theme set on the option page
     * @returns {string} stylesheet for popup 
     */
-function loadStyle(){
+function loadStyle() {
     let style = document.createElement("style");
 
     style.textContent = ".mwe-popups{background:#fff;position:absolute;z-index:110;-webkit-box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;padding:0;font-size:14px;min-width:300px;border-radius:2px}.mwe-popups.mwe-popups-is-not-tall{width:320px}.mwe-popups .mwe-popups-container{color:#222;margin-top:-9px;padding-top:9px;text-decoration:none}.mwe-popups.mwe-popups-is-not-tall .mwe-popups-extract{min-height:40px;max-height:140px;overflow:hidden;margin-bottom:47px;padding-bottom:0}.mwe-popups .mwe-popups-extract{margin:16px;display:block;color:#222;text-decoration:none;position:relative}.mwe-popups.flipped_y:before{content:'';position:absolute;border:8px solid transparent;border-bottom:0;border-top:8px solid #a2a9b1;bottom:-8px;left:10px}.mwe-popups.flipped_y:after{content:'';position:absolute;border:11px solid transparent;border-bottom:0;border-top:11px solid #fff;bottom:-7px;left:7px}.mwe-popups.mwe-popups-no-image-tri:before{content:'';position:absolute;border:8px solid transparent;border-top:0;border-bottom:8px solid #a2a9b1;top:-8px;left:10px}.mwe-popups.mwe-popups-no-image-tri:after{content:'';position:absolute;border:11px solid transparent;border-top:0;border-bottom:11px solid #fff;top:-7px;left:7px}.audio{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);background-position:center;background-repeat:no-repeat;cursor:pointer;margin-left:8px;opacity:.5;width:16px;display:inline-block}.audio:hover{opacity:1}.mwe-popups.flipped_x:before{left:unset;right:10px}.mwe-popups.flipped_x:after{left:unset;right:7px}.type{float:right; color:#aaa;}";
 
-    if (THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches){
+    if (THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches) {
         style.textContent += ".mwe-popups{background:#1b1b1b}.mwe-popups .mwe-popups-container{color:#fff}.mwe-popups .mwe-popups-extract{color:#fff}.mwe-popups .mwe-popups-extract a{color:#0ff}.mwe-popups.flipped_y:before{border-top:8px solid #fff}.mwe-popups.flipped_y:after{border-top:11px solid #1b1b1b}.mwe-popups.mwe-popups-no-image-tri:before{border-bottom:8px solid #fff}.mwe-popups.mwe-popups-no-image-tri:after{border-bottom:11px solid #1b1b1b}.audio{opacity:.6;filter:invert(1)}";
     }
-    
+
     return style;
 }
 
@@ -107,10 +107,10 @@ function createDiv(info) {
     var hostDiv = document.createElement("div");
 
     hostDiv.className = "dictionaryDiv";
-    hostDiv.style.left = info.left -10 + "px";
+    hostDiv.style.left = info.left - 10 + "px";
     hostDiv.style.position = "absolute";
     hostDiv.style.zIndex = "1000000"
-    hostDiv.attachShadow({mode: 'open'});
+    hostDiv.attachShadow({ mode: 'open' });
 
     var shadow = hostDiv.shadowRoot;
 
@@ -153,14 +153,14 @@ function createDiv(info) {
 
     let sound = document.createElement("audio");
     audio.appendChild(sound);
-    audio.addEventListener("click", function(){
+    audio.addEventListener("click", function () {
         sound.play();
     });
-    
+
     let type = document.createElement('p');
     type.className = "type";
 
-    var moreInfo =document.createElement("a");
+    var moreInfo = document.createElement("a");
     moreInfo.style = "float: right; text-decoration: none;"
     moreInfo.target = "_blank";
 
@@ -171,17 +171,17 @@ function createDiv(info) {
     content.appendChild(moreInfo);
     document.body.appendChild(hostDiv);
 
-    if(info.clientY < window.innerHeight/2){
+    if (info.clientY < window.innerHeight / 2) {
         popupDiv.className = "mwe-popups mwe-popups-no-image-tri mwe-popups-is-not-tall";
         hostDiv.style.top = info.bottom + 10 + "px";
-        if(info.height == 0){
+        if (info.height == 0) {
             hostDiv.style.top = parseInt(hostDiv.style.top) + 8 + "px";
         }
     } else {
         popupDiv.className = "mwe-popups flipped_y mwe-popups-is-not-tall";
         hostDiv.style.top = info.top - 10 - popupDiv.clientHeight + "px";
 
-        if(info.height == 0){
+        if (info.height == 0) {
             hostDiv.style.top = parseInt(hostDiv.style.top) - 8 + "px";
         }
     }
@@ -197,11 +197,11 @@ function createDiv(info) {
         }
     }
 
-    return { 
-        heading, 
-        meaning, 
+    return {
+        heading,
+        meaning,
         moreInfo,
-        type, 
+        type,
         audio,
         sound,
         content,
@@ -226,7 +226,7 @@ function getSelectionCoords(selection) {
     * @param {HTMLElement} createdDiv - the popup div
     * @param {object} content - fetched meaning deatails
     */
-function appendToDiv(createdDiv, content){
+function appendToDiv(createdDiv, content) {
     var hostDiv = createdDiv.heading.getRootNode().host;
     var popupDiv = createdDiv.heading.getRootNode().querySelectorAll("div")[1];
 
@@ -235,21 +235,23 @@ function appendToDiv(createdDiv, content){
     createdDiv.meaning.innerHTML = content.meaning;
     createdDiv.moreInfo.textContent = "More »";
     createdDiv.moreInfo.href = content.url;
+    createdDiv.moreInfo.style.display = 'block';
     createdDiv.type.innerHTML = `<i>${content.type}</i>`
+    createdDiv.type.style.display = 'block';
 
 
     var heightAfter = popupDiv.clientHeight;
     var difference = heightAfter - heightBefore;
 
 
-    if(popupDiv.classList.contains("flipped_y")){
+    if (popupDiv.classList.contains("flipped_y")) {
         hostDiv.style.top = parseInt(hostDiv.style.top) - difference + 1 + "px";
     }
-    
 
-    if(content.audioSrc){
+
+    if (content.audioSrc) {
         createdDiv.sound.src = content.audioSrc;
-        createdDiv.audio.style.display  = "inline-block";
+        createdDiv.audio.style.display = "inline-block";
         createdDiv.sound.autoplay = (AUTOPLAY === "true");
     }
 
@@ -261,11 +263,12 @@ function appendToDiv(createdDiv, content){
     * Update the popup if no meaning is found
     * @param {HTMLElement} createdDiv 
     */
-function noMeaningFound (createdDiv, language){
+function noMeaningFound(createdDiv, language) {
     createdDiv.heading.textContent = "Sorry";
     createdDiv.meaning.textContent = `No definition found in ${SUPPORTED_LANGUAGE[language]}. To search in different language select from below options`;
-    createdDiv.audio.remove();
-    createdDiv.moreInfo.remove();
+    createdDiv.audio.style.display = 'none';
+    createdDiv.moreInfo.style.display = 'none';
+    createdDiv.type.style.display = 'none';
     showLangSwitcher(createdDiv, language);
 }
 
@@ -273,10 +276,10 @@ function noMeaningFound (createdDiv, language){
 *  Remove popup on clicking outside of it
 */
 document.addEventListener('click', removeMeaning);
-function removeMeaning(event){
+function removeMeaning(event) {
     var element = event.target;
-    if(!element.classList.contains("dictionaryDiv")){
-        document.querySelectorAll(".dictionaryDiv").forEach(function(Node){
+    if (!element.classList.contains("dictionaryDiv")) {
+        document.querySelectorAll(".dictionaryDiv").forEach(function (Node) {
             Node.remove();
         });
     }
@@ -287,34 +290,34 @@ function removeMeaning(event){
 * @kind event
 */
 document.addEventListener('dblclick', ((e) => {
-    if(TRIGGER_KEY === 'rightclick'){return}
-    
+    if (TRIGGER_KEY === 'rightclick') { return }
+
     if (TRIGGER_KEY === 'none') {
         return showMeaning(e);
     }
 
     //e has property altKey, shiftKey, cmdKey representing they key being pressed while double clicking.
-    if(e[`${TRIGGER_KEY}Key`]) {
+    if (e[`${TRIGGER_KEY}Key`]) {
         return showMeaning(e);
     }
 
     return;
 }));
 
-    
+
 
 /**
  * Retrieve Setting 
  */
-(async ()=>{
+(async () => {
     let storageItem = await browser.storage.local.get();
-    let interaction = storageItem.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY }};
-        NUMOFDEF = storageItem.numOfDef || "2";
-        LANGUAGE = storageItem.language || DEFAULT_LANGUAGE;
-        THEME = storageItem.theme || DEFAULT_THEME;
-        AUTOPLAY = storageItem.autoplay || false;
-        TRIGGER_KEY = interaction.dblClick.key;
-  
+    let interaction = storageItem.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY } };
+    NUMOFDEF = storageItem.numOfDef || "2";
+    LANGUAGE = storageItem.language || DEFAULT_LANGUAGE;
+    THEME = storageItem.theme || DEFAULT_THEME;
+    AUTOPLAY = storageItem.autoplay || false;
+    TRIGGER_KEY = interaction.dblClick.key;
+
 })();
 
 
@@ -322,17 +325,17 @@ document.addEventListener('dblclick', ((e) => {
  * Show alanguage switcher in bottom corner
  * @param {object} obj - the object returned by createDiv function 
  */
-function showLangSwitcher(obj, lang){
+function showLangSwitcher(obj, lang) {
     let langSwitcher = document.createElement("select");
     langSwitcher.id = "lang-switcher";
-    for(let key in SUPPORTED_LANGUAGE){
-        langSwitcher.innerHTML+= `<option value="${key}">${SUPPORTED_LANGUAGE[key]}</option>`;
+    for (let key in SUPPORTED_LANGUAGE) {
+        langSwitcher.innerHTML += `<option value="${key}">${SUPPORTED_LANGUAGE[key]}</option>`;
     };
     langSwitcher.querySelector(`[value="${lang}"]`).selected = true;
 
     obj.content.appendChild(langSwitcher);
 
-    langSwitcher.addEventListener("change", (e)=>{ 
+    langSwitcher.addEventListener("change", (e) => {
         langSwitcher.remove();
         return respondToLangSwitcher(e.target.value, obj);
     });
@@ -343,13 +346,13 @@ function showLangSwitcher(obj, lang){
  * @param {event} event - languageSwitcher change event 
  * @param {object} obj - createDiv object
  */
-async function respondToLangSwitcher(lang, obj){
+async function respondToLangSwitcher(lang, obj) {
     obj.heading.textContent = "Searching...";
     obj.meaning.textContent = `Looking for "${SEARCHWORD}" in ${SUPPORTED_LANGUAGE[lang]}`;
     LANGUAGE = lang;
 
     let request = await retrieveMeaning(lang);
-    if (!request.content) { return noMeaningFound(obj,lang);}
-    
+    if (!request.content) { return noMeaningFound(obj, lang); }
+
     return appendToDiv(obj, request.content);
 }

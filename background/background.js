@@ -35,7 +35,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
  */
 function fetchUrl(lang, word, countryCode){
     let url = '';
-    let define = {"en":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
+    let define = {"en":"define", "en-US":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
     if(lang == "hi"){
        return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
     }
@@ -59,6 +59,8 @@ function extractMeaning (document, context){
         j = 1;
 
     let type = document.querySelector('div[class~="YrbPuc"]').textContent || "";
+    // get the language from the dictionary to aviod saving wrong language
+    let fetchedlang = JSON.parse(document.querySelector('div[data-bkt=dictionary]').dataset.maindata)[13][7][1][1]; 
 
     if(definitionDiv){
         definitionDiv.forEach((def)=>{
@@ -102,7 +104,7 @@ function extractMeaning (document, context){
 
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
-    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, type: type, audioSrc: audioSrc, url: context.url, lang: context.lang};
+    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, type: type, audioSrc: audioSrc, url: context.url, lang: fetchedlang};
 };
 
 /**
