@@ -7,8 +7,16 @@
     <title>Personal Dictonary</title>
     <link rel="stylesheet" href="dict.css">
     <link rel="shortcut icon" type="image/png" href="../icons/lexicon128.png"/>
-</head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    </head>
 <body id="light">
+    <header>
+        <h1>Personal Dictionary</h1>
+    </header>
     <div id="no-word-found" style="display:none">
         <h3>No word found in history</h3>
         <p>Either word history is turned off or you have't looked for any word yet</p>
@@ -26,6 +34,10 @@
     </div>
     <div id="mean">
 
+    </div>
+
+    <div id="storage-changed">
+        <p>New words have been added to Dictionary. Refresh the page to see them</p>
     </div>
     <script src="dict.js"></script>
 </body>

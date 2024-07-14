@@ -1,9 +1,9 @@
-var DEFAULT_LANGUAGE = 'en',
+let DEFAULT_LANGUAGE = 'en',
     DEFAULT_THEME = 'light',
     DEFAULT_TRIGGER_KEY = 'none',
     SEARCHWORD,
-    SUPPORTED_LANGUAGE = { "en-US":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" },
-    COUNTRY_CODE = { "en": "UK", "en-US": "US", "fr": "FR", "de": "DE", "es": "ES", "hi": "IN", "pt": "PT", "pt-br": "BR" },
+    SUPPORTED_LANGUAGE,
+    COUNTRY_CODE = { "en": "UK", "en-us": "US", "fr": "FR", "de": "DE", "es": "ES", "hi": "IN", "pt": "PT", "pt-br": "BR" },
     LANGUAGE,
     NUMOFDEF,
     THEME,
@@ -316,7 +316,8 @@ document.addEventListener('dblclick', ((e) => {
     LANGUAGE = storageItem.language || DEFAULT_LANGUAGE;
     THEME = storageItem.theme || DEFAULT_THEME;
     AUTOPLAY = storageItem.autoplay || false;
-    TRIGGER_KEY = interaction.dblClick.key;
+    TRIGGER_KEY = interaction.dblClick.key,
+    SUPPORTED_LANGUAGE = storageItem.supportedLang;
 
 })();
 

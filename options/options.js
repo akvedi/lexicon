@@ -56,7 +56,6 @@ function restoreOptions() {
         let language = results.language,
             interaction = results.interaction || {},
             history = results.history || { enabled: IS_HISTORY_ENABLED_BY_DEFAULT },
-            definitions = results.definitions || [],
             theme = results.theme,
             numOfDef = results.numOfDef;
             autoplay = results.autoplay;
@@ -77,7 +76,7 @@ function restoreOptions() {
 
         // Restore history setting
         document.querySelector("#store-history-checkbox").checked = history.enabled;
-        document.querySelector("#num-words-in-history").innerText = definitions.length;
+        document.querySelector("#num-words-in-history").innerText = results.totalWords || 0;
         
         //Restore theme setting
         document.querySelector("#theme-selector").value = theme || DEFAULT_THEME;
@@ -93,12 +92,12 @@ function restoreOptions() {
  */
 function downloadHistory (e) {
     let fileContent = "", 
-        storageItem = browser.storage.local.get("definitions"),
+        storageItem = browser.storage.local.get("savedDef"),
         anchorTag = document.querySelector("#download-history-link");
 
     storageItem.then((results) => {
-        let definitions = results.definitions || {};
-        fileContent = JSON.stringify(definitions, null, 2);
+        let savedDef = results.savedDef || {};
+        fileContent = JSON.stringify(savedDef, null, 2);
 
         anchorTag.href = window.URL.createObjectURL(new Blob([fileContent],{
             type: "application/json"
@@ -142,7 +141,7 @@ function resetOptions (e) {
  */
 function clearHistory(e) {
     if(confirm("All of your word history will be cleared")){
-        browser.storage.local.set({ definitions: [] });
+        browser.storage.local.set({ savedDef: {} });
         browser.storage.local.set({ longestWord: "" }); 
         document.getElementById("num-words-in-history").innerText = "0";
     };
@@ -157,7 +156,7 @@ function showSaveStatusAnimation () {
     SAVE_STATUS.style.opacity = 1;
     window.setTimeout(function() {
         SAVE_STATUS.style.setProperty("-webkit-transition", "opacity 0.4s ease-out");
-        SAVE_STATUS.style.opacity = 0
+        SAVE_STATUS.style.opacity = 0;
     }, 1500);
 }
 

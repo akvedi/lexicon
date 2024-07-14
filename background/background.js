@@ -19,8 +19,8 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             content && browser.storage.local.get().then((results) => {
                 let history = results.history || DEFAULT_HISTORY_SETTING;
-        
-                history.enabled && saveWord(content)
+                                
+                history.enabled && saveWord(content);
             });
         })
 
@@ -35,11 +35,10 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
  */
 function fetchUrl(lang, word, countryCode){
     let url = '';
-    let define = {"en":"define", "en-US":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
+    let define = {"en":"define", "en-us":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
     if(lang == "hi"){
-       return url = `https://www.google.com/search?hl=${lang}&q=${word}+मतलब&gl=IN`;
+       return url = `https://www.google.com/search?hl=hi&q=${word}+मतलब&gl=IN`;
     }
-
     return url = `https://www.google.com/search?hl=${lang}&q=${define[lang]}+${word.replace(/·/g, '')}&gl=${countryCode}`;
 }
 
@@ -55,12 +54,12 @@ function extractMeaning (document, context){
     let word = document.querySelector("[data-dobid='hdw']").textContent,
         definitionDiv = document.querySelectorAll("div[data-dobid='dfn']"),
         meaningHtml = "",
-        meaningJson = {word: context.word},
+        meaningJson = {},
         j = 1;
 
     let type = document.querySelector('div[class~="YrbPuc"]').textContent || "";
     // get the language from the dictionary to aviod saving wrong language
-    let fetchedlang = JSON.parse(document.querySelector('div[data-bkt=dictionary]').dataset.maindata)[13][7][1][1]; 
+    let fetchedlang = JSON.parse(document.querySelector('div[data-bkt=dictionary]').dataset.maindata)[13][7][1][1].toLowerCase(); 
 
     if(definitionDiv){
         definitionDiv.forEach((def)=>{
@@ -112,26 +111,47 @@ function extractMeaning (document, context){
  * @param {*} content 
  */
 async function saveWord (content) {
+
+    // Normalize the word and fetch storage items
     let word = content.word.replace(/·/g, '').toLowerCase(),
         storageItem = await browser.storage.local.get();
-    let definitions = storageItem.definitions || [];
+    let savedDef = await {...storageItem.savedDef} || {};
 
-    // Check if word is already in the store 
-    if(definitions.filter(obj => obj.word == `${word}`).length == 1){return}
+     // Ensure definitions[content.lang] is initialized
+     if (!savedDef[content.lang]) {
+        savedDef[content.lang] = {}; // Initialize if undefined 
+    }
+    
+    // Check if the word is already stored and exit if exists
+    if(!!savedDef[content.lang][word]){return}
 
-
+    // Exit if the word already exists
     let longestWord = storageItem.longestWord || "";
-    let json = content.meaningJson;
-        json["word"] = word,
-        json["audioSrc"] = content.audioSrc;
-        json["lang"] = content.lang;
-        definitions.push(json);
 
+    // Get the JSON object from content
+    let json = {...content.meaningJson};
+
+    // Add additional properties
+        json.audioSrc = content.audioSrc;
+        json.lang = content.lang;
+        json.type = content.type;
+        savedDef[content.lang][word] = json;
+        
     (word.length > longestWord.length) ? (longestWord = word):longestWord;
 
-    return browser.storage.local.set({ definitions, longestWord });
+    let totalWords = calcDefLength(savedDef);
+
+    return browser.storage.local.set({ savedDef, longestWord, totalWords });
 }
 
+// Calulate total word stored
+function calcDefLength(obj){
+    let i = 0;
+    for (let key in obj)
+       i += Object.keys(obj[key]).length;
+
+    return i;
+}
 
 /*
 * Context Menu
@@ -157,3 +177,44 @@ browser.contextMenus.onClicked.addListener(function (info, tab) {
         });
     }
 });
+
+
+// Save to localstorage
+(async ()=>{
+    let supportedLang = { "en-us":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" };
+    browser.storage.local.set({supportedLang: supportedLang});
+
+    let store = await browser.storage.local.get();
+
+    if(store.definitions){ // Move from definitions to savedDef
+        copyToNew(store.definitions, store.savedDef);
+    }
+})();
+
+
+//  Temp code to Move from definitions to savedDef
+
+function copyToNew(old, newobj){
+    let mod = {...newobj};
+    let i = 0
+    old.forEach(x => {
+        if(!mod[x.lang.toLowerCase()]){
+            mod[x.lang.toLowerCase()] = {}
+        }
+        if(!mod[x.lang.toLowerCase()][x.word])
+            mod[x.lang.toLowerCase()][x.word] = {}
+
+
+        let k = mod[x.lang.toLowerCase()][x.word]
+        k.audioSrc = x.audioSrc;
+        k.lang = x.lang;
+        if(x.type) k.type = x.type;
+        k.meaning1 = x.meaning1;
+        if(x.meaning2) k.meaning2 = x.meaning2;
+        if(x.meaning3) k.meaning3 = x.meaning3;
+
+    });
+
+    browser.storage.local.remove("definitions");
+    return browser.storage.local.set({savedDef:mod, totalWords: old.length});
+}
