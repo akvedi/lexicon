@@ -3,7 +3,7 @@
 
   "manifest_version": 2,
   "name": "Lexicon",
-  "version": "1.6.0",
+  "version": "1.6.1",
 
   "description": "Quickly Define Words While You Browse By Just Double Clicking On The Word",
 
@@ -49,7 +49,7 @@
       "16": "icons/lexicon128.png"
     },
     "browser_style": true,
-    "default_popup": "popup/popup.html"
+    "default_popup": "inc/popup/popup.html"
   },
   "browser_specific_settings": {
     "gecko": {

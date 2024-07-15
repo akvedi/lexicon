@@ -141,8 +141,7 @@ function resetOptions (e) {
  */
 function clearHistory(e) {
     if(confirm("All of your word history will be cleared")){
-        browser.storage.local.set({ savedDef: {} });
-        browser.storage.local.set({ longestWord: "" }); 
+        browser.storage.local.set({ savedDef: {}, longestWord: "", totalWords: "" });
         document.getElementById("num-words-in-history").innerText = "0";
     };
     e.preventDefault();

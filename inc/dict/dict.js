@@ -78,7 +78,7 @@ function showMeaning(value){
         <div class="means-meta">
             <h4>${value.textContent}<span class="audio-btn"></span></h4>
             <audio src="${DEF[value.className][value.textContent].audioSrc}" preload="none"></audio>
-            <span class="type">(${DEF[value.className][value.textContent].type || ''})</span>
+            <span class="type">${DEF[value.className][value.textContent].type || ''}</span>
         </div>
         <div class="means-li">
             <ul>
@@ -117,7 +117,7 @@ function outputhtml(obj, lang = "all"){
 function deleteWord(e){
     let lang = e.className;
     let word = e.textContent;
-    let totalWords = TOTALWORDS--
+
     //Delete the word and remove word
     delete DEF[lang][word];
     e.parentNode.remove();
@@ -125,9 +125,17 @@ function deleteWord(e){
     if(Object.keys(DEF[lang]).length == 0){
         delete DEF[lang];
     }
-    return browser.storage.local.set({savedDef:{...DEF}, totalWords: totalWords});
+    return browser.storage.local.set({savedDef:{...DEF}, totalWords: calcDefLength(DEF)});
 }
 
+// Calulate total word stored
+function calcDefLength(obj){
+    let i = 0;
+    for (let key in obj)
+       i += Object.keys(obj[key]).length;
+
+    return i;
+}
 
 
 async function onStorageChange(e) {

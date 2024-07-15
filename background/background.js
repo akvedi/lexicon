@@ -218,3 +218,14 @@ function copyToNew(old, newobj){
     browser.storage.local.remove("definitions");
     return browser.storage.local.set({savedDef:mod, totalWords: old.length});
 }
+
+
+browser.runtime.onInstalled.addListener((e) =>{
+    if (e.reason === 'update' && e.previousVersion < browser.runtime.getManifest().version) {      
+        // Construct the URL of the local file
+        let localFileURL = browser.runtime.getURL('../inc/update/update.html');
+        
+        // Open a new tab with the local file
+        browser.tabs.create({ url: localFileURL });
+    }
+});    

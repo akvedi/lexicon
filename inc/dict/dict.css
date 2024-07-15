@@ -5,7 +5,7 @@
     font-optical-sizing: auto;
     font-style: normal;
     font-variation-settings:
-      "wdth" 200;
+      "wdth" 100;
     
 }
 
@@ -51,7 +51,6 @@ header{
 }
 .word{
     background: #fff;
-    border: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
     margin: 2px;
@@ -72,8 +71,8 @@ button{
     transition: 0.2 all ease;
 }
     h4{
-    padding: 15px 10px 15px 40px;
-    transition: 0.3s all ease;
+    padding: 15px 10px 15px 35px;
+    /* transition: padding-right 0.3s ease; */
 
     }
 }
@@ -85,9 +84,9 @@ button{
     opacity:1;
 
 }
-.word:hover h4{
+/* .word:hover h4{
     padding-right: 30px;
-}
+} */
 
 ul{
     text-align: start;

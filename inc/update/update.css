@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 200;
+      line-height: 1.5rem;
+}
+
+body{
+    background: #23222b;
+    color: #fff;
+}
+header{
+    background: #449;
+    padding:0.8rem 2rem 0.5rem ;
+    box-shadow: 0 0 8px -2px rgba(0,0,0,0.6);
+    text-align: center;
+}
+
+header h1{
+    font-size: 2rem;
+}
+header p{
+    font-style: italic;
+}
+
+main{
+    margin: 30px auto;
+    max-width: 1000px;
+}
+
+main h3{
+    margin:0.8rem 0
+}
+
+ul{
+    padding: 0 1rem 0 2.5rem;
+}
+
+i{
+    font-style: italic;
+}
+
+p, h2, h3, #info li{
+    padding: 0.7rem 0;
+}
+
+footer{
+    padding: 40px 20px 70px;
+}
+footer > div{
+    width: 500px;
+    margin: auto;
+    display: flex;
+    gap:20px;
+    justify-content: center;
+    align-items: center;
+}
+footer a{
+    color: #fff;
+
+}
