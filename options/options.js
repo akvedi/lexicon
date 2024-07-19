@@ -22,7 +22,7 @@ const DEFAULT_LANGUAGE = 'en',
  * @param {event} e 
  */
 function saveOptions(e) {
-    browser.storage.local.set({
+    browser.storage.sync.set({
         language: document.querySelector("#language-selector").value,
         interaction: {
             dblClick: {
@@ -50,7 +50,7 @@ function saveOptions(e) {
  * Runs on option page refresh
  */ 
 function restoreOptions() {
-    let storageItem = browser.storage.local.get();
+    let storageItem = browser.storage.sync.get();
 
     storageItem.then((results) => {
         let language = results.language,

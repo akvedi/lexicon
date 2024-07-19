@@ -2,7 +2,7 @@ let SUPPORTED_LANGUAGE = {};
 let DEF, THEME, TOTALWORDS;
 
 (async () => {
-    let storageItem = await browser.storage.local.get();
+    let storageItem = await browser.storage.sync.get();
     DEF = storageItem.savedDef || {};
     THEME = storageItem.theme;
     TOTALWORDS = storageItem.totalWords;

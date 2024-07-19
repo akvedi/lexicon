@@ -17,7 +17,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             sendResponse({ content });
 
-            content && browser.storage.local.get().then((results) => {
+            content && browser.storage.sync.get().then((results) => {
                 let history = results.history || DEFAULT_HISTORY_SETTING;
                                 
                 history.enabled && saveWord(content);
@@ -182,7 +182,7 @@ browser.contextMenus.onClicked.addListener(function (info, tab) {
 // Save to localstorage
 (async ()=>{
     let supportedLang = { "en-us":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" };
-    browser.storage.local.set({supportedLang: supportedLang});
+    browser.storage.sync.set({supportedLang: supportedLang});
 
     let store = await browser.storage.local.get();
 

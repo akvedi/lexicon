@@ -310,7 +310,7 @@ document.addEventListener('dblclick', ((e) => {
  * Retrieve Setting 
  */
 (async () => {
-    let storageItem = await browser.storage.local.get();
+    let storageItem = await browser.storage.sync.get();
     let interaction = storageItem.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY } };
     NUMOFDEF = storageItem.numOfDef || "2";
     LANGUAGE = storageItem.language || DEFAULT_LANGUAGE;
