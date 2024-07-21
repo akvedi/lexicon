@@ -1,8 +1,10 @@
 
 (async ()=>{
-    let storageItem = await browser.storage.sync.get();
-    upadtePopup(storageItem);
-    loadTheme(storageItem.theme);
+    let storageLocal = await browser.storage.local.get();
+    let storageSync = await browser.storage.sync.get();
+
+    upadtePopup(storageLocal);
+    loadTheme(storageSync.theme);
     
 })();
 

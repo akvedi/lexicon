@@ -1,3 +1,6 @@
+## Changelog 1.6.5
+ - **Sync Settings Across Browsers:** Settings are now synchronized across browsers when logged in with a Firefox account.
+
 ## Changelog 1.6.0
 - You can now delete single word from dicitonary
 - Improved dictionary UI
@@ -7,6 +10,7 @@
 - Fixed wrong definition in dictionary view
 
 ## Changelog 1.5.5
+
 - Fixed autoplay issue introduced in v1.5.0
 - Enhanced user interface
 - Added part of speech identification for words

@@ -2,11 +2,17 @@ let SUPPORTED_LANGUAGE = {};
 let DEF, THEME, TOTALWORDS;
 
 (async () => {
-    let storageItem = await browser.storage.sync.get();
-    DEF = storageItem.savedDef || {};
-    THEME = storageItem.theme;
-    TOTALWORDS = storageItem.totalWords;
-    SUPPORTED_LANGUAGE = storageItem.supportedLang;
+    // get settings from sync storage
+    let storageSync = await browser.storage.sync.get();
+        
+        THEME = storageSync.theme;
+        SUPPORTED_LANGUAGE = storageSync.supportedLang;
+
+    // get definitions and totalwords from local storage
+    let storageLocal = await browser.storage.local.get();
+        DEF = storageLocal.savedDef || {};
+        TOTALWORDS = storageLocal.totalWords;
+    
     
     loadtheme();
 
@@ -114,6 +120,7 @@ function outputhtml(obj, lang = "all"){
     return document.getElementById("content").innerHTML = html;
 }
 
+// Delete word from storage
 function deleteWord(e){
     let lang = e.className;
     let word = e.textContent;
@@ -137,7 +144,7 @@ function calcDefLength(obj){
     return i;
 }
 
-
+// show a message when a new word is added
 async function onStorageChange(e) {
   console.log(e)
     if (e.totalWords.newValue <= e.totalWords.oldValue)

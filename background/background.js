@@ -2,6 +2,7 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
     DEFAULT_HISTORY_SETTING = {enabled: true};
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+
     let { word, lang, numOfDef, countryCode } = request;
         
     const url = fetchUrl(lang, word, countryCode);
@@ -182,13 +183,18 @@ browser.contextMenus.onClicked.addListener(function (info, tab) {
 // Save to localstorage
 (async ()=>{
     let supportedLang = { "en-us":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" };
-    browser.storage.sync.set({supportedLang: supportedLang});
+    await browser.storage.sync.set({supportedLang: supportedLang});
 
-    let store = await browser.storage.local.get();
+    let storageSync = await browser.storage.sync.get();
+    
+    let storageLocal = await browser.storage.local.get();
 
-    if(store.definitions){ // Move from definitions to savedDef
-        copyToNew(store.definitions, store.savedDef);
+    if(storageLocal.definitions){ // Move from definitions to savedDef
+        copyToNew(storageLocal.definitions, storageLocal.savedDef);
     }
+
+    migrateToSync(storageLocal, storageSync);
+
 })();
 
 
@@ -229,3 +235,23 @@ browser.runtime.onInstalled.addListener((e) =>{
         browser.tabs.create({ url: localFileURL });
     }
 });    
+
+
+// Migrate settings from local to sync storage if not already done then delete local storage
+
+function migrateToSync(local, sync){
+
+    let localKeys = Object.keys(local);
+
+    for (let key of localKeys){
+        if(key !== 'savedDef' && key !== 'longestWord' && key !== 'totalWords'){
+            sync[key] = local[key];
+        }
+    }
+
+    browser.storage.sync.set(sync);
+    browser.storage.local.remove(['language', 'interaction', 'history', 'theme', 'numOfDef', 'autoplay', 'supportedLang']);
+
+}
+
+console.log(browser.storage.sync.get());

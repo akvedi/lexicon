@@ -59,13 +59,5 @@ This tool is under active development. To get involved you can watch the repo, f
 
 
 
----
-## Changelog 1.6.1
-- You can now delete single word from dicitonary
-- Improved dictionary UI
-- Added English (UK) Support
-- Personal Dictionary will now prompt to refresh page when new word is added
-- Improved handling words with identical spellings across multiple languages
-- Fixed wrong definition in dictionary view
 
 

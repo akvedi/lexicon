@@ -5,7 +5,8 @@
   "scripts": {
     "build": "web-ext build",
     "test-android": "web-ext run --target=firefox-android --android-device=e043d39c9804",
-    "lint": "web ext lint"
+    "lint": "web ext lint",
+    "dev": "web-ext run --firefox"
     
   }
 }

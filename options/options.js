@@ -115,7 +115,7 @@ function downloadHistory (e) {
  */
 function resetOptions (e) {
     if(confirm("Do you really want to reset extension settings")){
-        browser.storage.local.set({
+        browser.storage.sync.set({
             language: DEFAULT_LANGUAGE,
             interaction: {
                 dblClick: {
@@ -141,7 +141,7 @@ function resetOptions (e) {
  */
 function clearHistory(e) {
     if(confirm("All of your word history will be cleared")){
-        browser.storage.local.set({ savedDef: {}, longestWord: "", totalWords: "" });
+        browser.storage.local.set({ savedDef: {}, longestWord: "", totalWords: 0 });
         document.getElementById("num-words-in-history").innerText = "0";
     };
     e.preventDefault();

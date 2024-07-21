@@ -310,14 +310,14 @@ document.addEventListener('dblclick', ((e) => {
  * Retrieve Setting 
  */
 (async () => {
-    let storageItem = await browser.storage.sync.get();
-    let interaction = storageItem.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY } };
-    NUMOFDEF = storageItem.numOfDef || "2";
-    LANGUAGE = storageItem.language || DEFAULT_LANGUAGE;
-    THEME = storageItem.theme || DEFAULT_THEME;
-    AUTOPLAY = storageItem.autoplay || false;
+    let storageSync = await browser.storage.sync.get();
+    let interaction = storageSync.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY } };
+    NUMOFDEF = storageSync.numOfDef || "2";
+    LANGUAGE = storageSync.language || DEFAULT_LANGUAGE;
+    THEME = storageSync.theme || DEFAULT_THEME;
+    AUTOPLAY = storageSync.autoplay || false;
     TRIGGER_KEY = interaction.dblClick.key,
-    SUPPORTED_LANGUAGE = storageItem.supportedLang;
+    SUPPORTED_LANGUAGE = storageSync.supportedLang || { "en-us":"English (US)", "en": "English (UK)", "fr": "French", "de": "German", "es": "Spanish", "hi": "Hindi", "pt": "Portuguese", "pt-br": "Brazilian Portuguese" };
 
 })();
 
