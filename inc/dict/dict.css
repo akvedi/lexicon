@@ -84,9 +84,21 @@ button{
     opacity:1;
 
 }
-/* .word:hover h4{
-    padding-right: 30px;
-} */
+.word .lang{
+    opacity: 0;
+    padding: 0 4px 2px;
+    font-size: 0.8rem;
+    margin-left: -2px;
+    margin-top: -10px;
+    border-radius: 8px 8px 8px 0;
+    position: absolute;
+
+}
+.word:hover .lang{
+    background: #370b0b;
+    color: #fff;
+    opacity: 1;
+}
 
 ul{
     text-align: start;
@@ -154,7 +166,12 @@ li{
     padding: 10px 0;
 }
 
-#lang-filter {
+#actions{
+    display: flex;
+    align-items: center;
+    gap:2rem;
+}
+select {
     border: 2px solid #1661b0;
     padding: 5px 10px;
     border-radius: 0;
@@ -201,6 +218,11 @@ li{
 #dark .word:hover {
   background: #494754;
   border: 2px solid #fff;
+}
+
+#dark .word:hover .lang{
+    background: #fff;
+    color: #000;
 }
 
 #dark #mean {

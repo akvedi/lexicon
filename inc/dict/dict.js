@@ -26,6 +26,7 @@ let DEF, THEME, TOTALWORDS;
 
 function loadtheme(){
     if(THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches){
+        document.getElementById("theme").value = 'dark';
         return document.querySelector('body').id = 'dark';
     }
     return document.querySelector('body').id = 'light';
@@ -34,6 +35,10 @@ function loadtheme(){
 document.getElementById("lang-filter").addEventListener("change", (e)=>{
         return outputhtml(DEF, e.target.value);
 })   
+
+document.getElementById("theme").addEventListener('change', (e)=>{
+    document.body.id = e.target.value;
+})
 
 document.body.addEventListener("click", (e)=>{
     if(e.target.nodeName == "H4"){
@@ -103,6 +108,7 @@ function outputhtml(obj, lang = "all"){
         for (let i in obj){
             for(let j in obj[i]){
                 html += `<div class="word">
+                <div class="lang">${obj[i][j].lang}</div>
                 <h4 class="${i}">${j}</h4>
                 <button class="remove-btn">X</button>
                 </div>`;
