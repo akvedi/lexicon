@@ -242,7 +242,7 @@ function appendToDiv(createdDiv, obj) {
 
     createdDiv.meaning.innerHTML = createDefinitonsList(obj[word], NUMOFDEF);
     createdDiv.moreInfo.textContent = "More »";
-    createdDiv.moreInfo.href = obj[word].url;
+    createdDiv.moreInfo.href = obj.url;
     createdDiv.moreInfo.style.display = 'block';
     createdDiv.type.innerHTML = `<i>${obj[word].type}</i>`;
     createdDiv.type.style.display = 'block';
