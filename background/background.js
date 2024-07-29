@@ -3,30 +3,61 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
-    let { word, lang, numOfDef, countryCode } = request;
-        
-    const url = fetchUrl(lang, word, countryCode);
-    
-    fetch(url, { 
-            method: 'GET',
-            credentials: 'omit'
-        })
-        .then((response) => response.text())
-        .then((text) => {
-            const document = new DOMParser().parseFromString(text, 'text/html'),
-                content = extractMeaning(document, { word, lang, numOfDef, url});
+    browser.storage.local.get().then(localStorage => {
+        let savedDef = localStorage.savedDef || {};
+        let savedWord = (savedDef[request.lang]) ? savedDef[request.lang][request.word] : false;
+        console.log(savedWord)
 
-            sendResponse({ content });
-
-            content && browser.storage.sync.get().then((results) => {
-                let history = results.history || DEFAULT_HISTORY_SETTING;
-                                
-                history.enabled && saveWord(content);
-            });
-        })
-
+        if(savedWord){   
+            sendResponse(fetchMeaningOffline(request, savedWord));
+        }
+        else{
+            fetchMeaningOnline(request).then(content => {
+                sendResponse(content);
+            })
+        }
+    })
+  
     return true;
 });
+
+
+async function fetchMeaningOnline(request){
+    let { word, lang, numOfDef, countryCode } = request;
+    const url = fetchUrl(lang, word, countryCode);
+
+    let fetchedData = await fetch(url, { method: 'GET', credentials: 'omit' });
+    const document = new DOMParser().parseFromString(await fetchedData.text(), 'text/html'),
+                
+    content = extractMeaning(document, { word, lang, numOfDef, url});
+
+    // Perform storage operation asynchronously
+    let results = await browser.storage.sync.get();
+    let history = results.history || DEFAULT_HISTORY_SETTING;
+
+    if (history.enabled && content) {
+        saveWord(content);
+    }
+
+    return content;
+}
+
+function fetchMeaningOffline(request, result, sendResponse){
+
+    let { word, lang, countryCode } = request;
+
+    const url = fetchUrl(lang, word, countryCode);
+
+    // console.log(`got ${word} from local storage`)
+
+    return {
+        [word]:{
+            ...result
+        },
+        url: url,
+        word:word
+    }
+}
 
 /**
  * Get The URL
@@ -54,9 +85,8 @@ function extractMeaning (document, context){
     
     let word = document.querySelector("[data-dobid='hdw']").textContent,
         definitionDiv = document.querySelectorAll("div[data-dobid='dfn']"),
-        meaningHtml = "",
         meaningJson = {},
-        j = 1;
+        j =1 ;
 
     let type = document.querySelector('div[class~="YrbPuc"]').textContent || "";
     // get the language from the dictionary to aviod saving wrong language
@@ -74,16 +104,12 @@ function extractMeaning (document, context){
                 }
             }
             meaningJson[`meaning${j}`] =  defnition;
-            if(j <= context.numOfDef){
-                meaningHtml += `<li>${meaningJson[`meaning${j}`]}</li>`;
-            }
             j++;
-            
         });
     }
 
 
-    var audio = document.querySelector("audio[jsname='QInZvb']"),
+    let audio = document.querySelector("audio[jsname='QInZvb']"),
         source = document.querySelector("audio[jsname='QInZvb'] source"),
         audioSrc = source && source.getAttribute('src');
 
@@ -104,7 +130,23 @@ function extractMeaning (document, context){
 
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
-    return {meaningJson: meaningJson, word: word, meaning: meaningHtml, type: type, audioSrc: audioSrc, url: context.url, lang: fetchedlang};
+    
+    let cleanedWord = word.replace(/·/g, '').toLowerCase();  // Remove the . from the word
+
+    let obj = {
+        [cleanedWord] :{ 
+            ...meaningJson,
+            word : cleanedWord,
+            type : type,
+            audioSrc : audioSrc,
+            lang : fetchedlang
+        },
+        url : context.url,
+        word :word,
+        cleanedWord: cleanedWord
+    }
+    
+    return obj;
 };
 
 /**
@@ -114,31 +156,25 @@ function extractMeaning (document, context){
 async function saveWord (content) {
 
     // Normalize the word and fetch storage items
-    let word = content.word.replace(/·/g, '').toLowerCase(),
-        storageItem = await browser.storage.local.get();
-    let savedDef = await {...storageItem.savedDef} || {};
+    // let word = content.word.replace(/·/g, '').toLowerCase(),
+    let key = content.cleanedWord;
+
+    let storageItem = await browser.storage.local.get();
+    let savedDef = await storageItem.savedDef || {};
 
      // Ensure definitions[content.lang] is initialized
-     if (!savedDef[content.lang]) {
-        savedDef[content.lang] = {}; // Initialize if undefined 
+     if (!savedDef[content[key].lang]) {
+        savedDef[content[key].lang] = {}; // Initialize if undefined 
     }
     
-    // Check if the word is already stored and exit if exists
-    if(!!savedDef[content.lang][word]){return}
+    // Check if the word is already stored 
+    if(!!savedDef[content[key].lang][key]){return}
 
-    // Exit if the word already exists
     let longestWord = storageItem.longestWord || "";
 
-    // Get the JSON object from content
-    let json = {...content.meaningJson};
-
-    // Add additional properties
-        json.audioSrc = content.audioSrc;
-        json.lang = content.lang;
-        json.type = content.type;
-        savedDef[content.lang][word] = json;
+        savedDef[content[key].lang][key] = content[key];
         
-    (word.length > longestWord.length) ? (longestWord = word):longestWord;
+    (key.length > longestWord.length) ? (longestWord = key):longestWord;
 
     let totalWords = calcDefLength(savedDef);
 
@@ -190,9 +226,13 @@ browser.contextMenus.onClicked.addListener(function (info, tab) {
     let storageLocal = await browser.storage.local.get();
 
     if(storageLocal.definitions){ // Move from definitions to savedDef
-        copyToNew(storageLocal.definitions, storageLocal.savedDef);
+        await copyToNew(storageLocal.definitions, storageLocal.savedDef);
     }
 
+    // Update savedDef needed for offline lookup feature
+    if(!storageLocal.savedDefVersion || storageLocal.savedDefVersion < 2 ){
+        updateSavedDef(storageLocal.savedDef);
+    }
     migrateToSync(storageLocal, storageSync);
 
 })();
@@ -214,6 +254,7 @@ function copyToNew(old, newobj){
         let k = mod[x.lang.toLowerCase()][x.word]
         k.audioSrc = x.audioSrc;
         k.lang = x.lang;
+        k.word = x.word;
         if(x.type) k.type = x.type;
         k.meaning1 = x.meaning1;
         if(x.meaning2) k.meaning2 = x.meaning2;
@@ -225,7 +266,9 @@ function copyToNew(old, newobj){
     return browser.storage.local.set({savedDef:mod, totalWords: old.length});
 }
 
-
+/**
+ * Open a new page when extension is updated
+ */
 browser.runtime.onInstalled.addListener((e) =>{
     if (e.reason === 'update' && e.previousVersion < browser.runtime.getManifest().version) {      
         // Construct the URL of the local file
@@ -254,4 +297,13 @@ function migrateToSync(local, sync){
 
 }
 
-console.log(browser.storage.sync.get());
+// Update savedDef
+
+function updateSavedDef(savedDef){
+    for (let lang in savedDef){
+        for (let wordkey in savedDef[lang]){
+            savedDef[lang][wordkey].word = wordkey;
+        }
+    }
+    browser.storage.local.set({savedDef, savedDefVersion: 2});
+}

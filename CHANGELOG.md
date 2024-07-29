@@ -1,5 +1,10 @@
+
 ## Changelog 1.6.5
- - **Sync Settings Across Browsers:** Settings are now synchronized across browsers when logged in with a Firefox account.
+
+- **Cross-Browser Sync:** Settings are now synchronized across browsers when logged in with a Firefox account.
+- **Offline Support:** Saved words are now fetched from local storage.
+- **New Close Button:** The definition popup now includes a close button, addressing an issue on a specific website where clicking outside the popup wouldn't close it.
+- **Enhanced Dictionary UI:** Hovering over a word in the dictionary now displays its language. Additionally, you can temporarily switch the dictionary theme.
 
 ## Changelog 1.6.0
 - You can now delete single word from dicitonary

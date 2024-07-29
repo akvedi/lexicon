@@ -17,22 +17,21 @@ let DEFAULT_LANGUAGE = 'en',
     * @returns 
     */
 function showMeaning(event) {
-    var createdDiv,
-        info = getSelectionInfo(event);
+    let info = getSelectionInfo(event);
+    let createdDiv = createDiv(info); // Create the popup div while meaning is being retrieved
 
     if (!info) { return; }
 
-    SEARCHWORD = info.word; // set the global variable 
+    SEARCHWORD = (info.word).toLowerCase(); // set the global variable
 
-    retrieveMeaning(LANGUAGE)
-        .then((response) => {
-            if (!response.content) { return noMeaningFound(createdDiv, LANGUAGE); }
-            appendToDiv(createdDiv, response.content);
-            // console.log(response.content);
-        });
+    //Todo: Show a Google search for phrases if selection is more than 2 words
+    // if(SEARCHWORD.split(" ").length > 2) { return; } // show a google search for phrases
 
-    // Creating this div while meaning is retrieved
-    createdDiv = createDiv(info);
+    retrieveMeaning(LANGUAGE).then((response) => {
+        if (!response) { return noMeaningFound(createdDiv, LANGUAGE); }
+        appendToDiv(createdDiv, response);
+    });
+
 }
 
 /**
@@ -89,12 +88,12 @@ function retrieveMeaning(lang) {
 function loadStyle() {
     let style = document.createElement("style");
 
-    style.textContent = ".mwe-popups{background:#fff;position:absolute;z-index:110;-webkit-box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;padding:0;font-size:14px;min-width:300px;border-radius:2px}.mwe-popups.mwe-popups-is-not-tall{width:320px}.mwe-popups .mwe-popups-container{color:#222;margin-top:-9px;padding-top:9px;text-decoration:none}.mwe-popups.mwe-popups-is-not-tall .mwe-popups-extract{min-height:40px;max-height:140px;overflow:hidden;margin-bottom:47px;padding-bottom:0}.mwe-popups .mwe-popups-extract{margin:16px;display:block;color:#222;text-decoration:none;position:relative}.mwe-popups.flipped_y:before{content:'';position:absolute;border:8px solid transparent;border-bottom:0;border-top:8px solid #a2a9b1;bottom:-8px;left:10px}.mwe-popups.flipped_y:after{content:'';position:absolute;border:11px solid transparent;border-bottom:0;border-top:11px solid #fff;bottom:-7px;left:7px}.mwe-popups.mwe-popups-no-image-tri:before{content:'';position:absolute;border:8px solid transparent;border-top:0;border-bottom:8px solid #a2a9b1;top:-8px;left:10px}.mwe-popups.mwe-popups-no-image-tri:after{content:'';position:absolute;border:11px solid transparent;border-top:0;border-bottom:11px solid #fff;top:-7px;left:7px}.audio{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);background-position:center;background-repeat:no-repeat;cursor:pointer;margin-left:8px;opacity:.5;width:16px;display:inline-block}.audio:hover{opacity:1}.mwe-popups.flipped_x:before{left:unset;right:10px}.mwe-popups.flipped_x:after{left:unset;right:7px}.type{float:right; color:#aaa;}";
+    style.textContent = ".mwe-popups{background:#fff;position:absolute;z-index:110;-webkit-box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;box-shadow:0 30px 90px -20px rgba(0,0,0,.3),0 0 1px #a2a9b1;padding:0;font-size:14px;min-width:300px;border-radius:2px}.mwe-popups.mwe-popups-is-not-tall{width:320px}.mwe-popups .mwe-popups-container{color:#222;margin-top:-9px;padding-top:9px;text-decoration:none}.mwe-popups.mwe-popups-is-not-tall .mwe-popups-extract{min-height:40px;max-height:140px;overflow:hidden;margin-bottom:47px;padding-bottom:0}.mwe-popups .mwe-popups-extract{margin:16px;display:block;color:#222;text-decoration:none;position:relative}.mwe-popups.flipped_y:before{content:'';position:absolute;border:8px solid transparent;border-bottom:0;border-top:8px solid #a2a9b1;bottom:-8px;left:10px}.mwe-popups.flipped_y:after{content:'';position:absolute;border:11px solid transparent;border-bottom:0;border-top:11px solid #fff;bottom:-7px;left:7px}.mwe-popups.mwe-popups-no-image-tri:before{content:'';position:absolute;border:8px solid transparent;border-top:0;border-bottom:8px solid #a2a9b1;top:-8px;left:10px}.mwe-popups.mwe-popups-no-image-tri:after{content:'';position:absolute;border:11px solid transparent;border-top:0;border-bottom:11px solid #fff;top:-7px;left:7px}.audio{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcUlEQVQ4y2P4//8/AyUYQhAH3gNxA7IAIQPmo/H3g/QA8XkgFiBkwHyoYnRQABVfj88AmGZcTuuHyjlgMwBZM7IE3NlQGhQe65EN+I8Dw8MLGgYoFpFqADK/YUAMwOsFigORatFIlYRElaRMWmaiBAMAp0n+3U0kqkAAAAAASUVORK5CYII=);background-position:center;background-repeat:no-repeat;cursor:pointer;margin-left:8px;opacity:.5;width:16px;display:inline-block}.audio:hover{opacity:1}.mwe-popups.flipped_x:before{left:unset;right:10px}.mwe-popups.flipped_x:after{left:unset;right:7px}.type{float:right; color:#aaa;} .close-btn{display:none} .mwe-popups-container:hover .close-btn{display:block}";
 
     if (THEME == 'dark' || (THEME == 'system' && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")).matches) {
         style.textContent += ".mwe-popups{background:#1b1b1b}.mwe-popups .mwe-popups-container{color:#fff}.mwe-popups .mwe-popups-extract{color:#fff}.mwe-popups .mwe-popups-extract a{color:#0ff}.mwe-popups.flipped_y:before{border-top:8px solid #fff}.mwe-popups.flipped_y:after{border-top:11px solid #1b1b1b}.mwe-popups.mwe-popups-no-image-tri:before{border-bottom:8px solid #fff}.mwe-popups.mwe-popups-no-image-tri:after{border-bottom:11px solid #1b1b1b}.audio{opacity:.6;filter:invert(1)}";
     }
-
+    
     return style;
 }
 
@@ -130,7 +129,14 @@ function createDiv(info) {
     contentContainer.className = "mwe-popups-container";
     popupDiv.appendChild(contentContainer);
 
-
+    let closeBtn = document.createElement('button');
+    closeBtn.textContent = "X";
+    closeBtn.className = "close-btn"
+    closeBtn.style = "position: absolute; right:-12px; top:-10px; background: darkred; color: #fff; border: 0; border-radius: 50%;padding: 4px 9px;";
+    closeBtn.addEventListener('click', ()=>{
+        hostDiv.remove();
+    })
+    contentContainer.appendChild(closeBtn);
 
     var content = document.createElement("div");
     content.className = "mwe-popups-extract";
@@ -224,24 +230,26 @@ function getSelectionCoords(selection) {
 /**
     * Update the popup with the meaning details
     * @param {HTMLElement} createdDiv - the popup div
-    * @param {object} content - fetched meaning deatails
+    * @param {object} obj - fetched meaning deatails
     */
-function appendToDiv(createdDiv, content) {
-    var hostDiv = createdDiv.heading.getRootNode().host;
-    var popupDiv = createdDiv.heading.getRootNode().querySelectorAll("div")[1];
+function appendToDiv(createdDiv, obj) {
+    let hostDiv = createdDiv.heading.getRootNode().host;
+    let popupDiv = createdDiv.heading.getRootNode().querySelectorAll("div")[1];
+    let word = obj.cleanedWord || obj.word;
 
-    var heightBefore = popupDiv.clientHeight;
-    createdDiv.heading.textContent = content.word;
-    createdDiv.meaning.innerHTML = content.meaning;
+    let heightBefore = popupDiv.clientHeight;
+    createdDiv.heading.textContent = obj.word;
+
+    createdDiv.meaning.innerHTML = createDefinitonsList(obj[word], NUMOFDEF);
     createdDiv.moreInfo.textContent = "More »";
-    createdDiv.moreInfo.href = content.url;
+    createdDiv.moreInfo.href = obj[word].url;
     createdDiv.moreInfo.style.display = 'block';
-    createdDiv.type.innerHTML = `<i>${content.type}</i>`
+    createdDiv.type.innerHTML = `<i>${obj[word].type}</i>`;
     createdDiv.type.style.display = 'block';
 
 
-    var heightAfter = popupDiv.clientHeight;
-    var difference = heightAfter - heightBefore;
+    let heightAfter = popupDiv.clientHeight;
+    let difference = heightAfter - heightBefore;
 
 
     if (popupDiv.classList.contains("flipped_y")) {
@@ -249,8 +257,8 @@ function appendToDiv(createdDiv, content) {
     }
 
 
-    if (content.audioSrc) {
-        createdDiv.sound.src = content.audioSrc;
+    if (obj[word].audioSrc) {
+        createdDiv.sound.src = obj[word].audioSrc;
         createdDiv.audio.style.display = "inline-block";
         createdDiv.sound.autoplay = (AUTOPLAY === "true");
     }
@@ -258,6 +266,34 @@ function appendToDiv(createdDiv, content) {
     // Show language switcher at the bottom of the popup
     showLangSwitcher(createdDiv, LANGUAGE);
 }
+
+/**
+ * 
+ * @param {the JSON obejct returned by the background script} meaningJson 
+ * @param {Num of Def set by user} numOfDef 
+ * @returns a list of definitions in HTML format
+ */
+function createDefinitonsList(wordObj, numOfDef){
+    let meaningHtml = "";
+    let meaning = [];
+    let i = 1;
+
+    for (let key in wordObj){
+        if(key[0] == 'm'){
+            meaning.push(wordObj[key])
+        }
+    }
+    
+    meaning.forEach(line => {
+        if(i<= numOfDef){
+            meaningHtml += `<li>${line}</li>`;
+        }
+        i++;
+    });
+    
+    return meaningHtml;
+}
+
 
 /**
     * Update the popup if no meaning is found
@@ -333,6 +369,7 @@ function showLangSwitcher(obj, lang) {
         langSwitcher.innerHTML += `<option value="${key}">${SUPPORTED_LANGUAGE[key]}</option>`;
     };
     langSwitcher.querySelector(`[value="${lang}"]`).selected = true;
+    langSwitcher.style = "border-radius: 5px; max-width: 110px;";
 
     obj.content.appendChild(langSwitcher);
 
@@ -352,8 +389,8 @@ async function respondToLangSwitcher(lang, obj) {
     obj.meaning.textContent = `Looking for "${SEARCHWORD}" in ${SUPPORTED_LANGUAGE[lang]}`;
     LANGUAGE = lang;
 
-    let request = await retrieveMeaning(lang);
-    if (!request.content) { return noMeaningFound(obj, lang); }
+    let response = await retrieveMeaning(lang);
+    if (!response) { return noMeaningFound(obj, lang); }
 
-    return appendToDiv(obj, request.content);
+    return appendToDiv(obj, response);
 }
