@@ -1,5 +1,5 @@
 
-## Changelog 1.6.5
+## Changelog 1.6.6
 
 - **Cross-Browser Sync:** Settings are now synchronized across browsers when logged in with a Firefox account.
 - **Offline Support:** Saved words are now fetched from local storage.
