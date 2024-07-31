@@ -6,8 +6,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     browser.storage.local.get().then(localStorage => {
         let savedDef = localStorage.savedDef || {};
         let savedWord = (savedDef[request.lang]) ? savedDef[request.lang][request.word] : false;
-        console.log(savedWord)
-
+        
         if(savedWord){   
             sendResponse(fetchMeaningOffline(request, savedWord));
         }
@@ -48,7 +47,7 @@ function fetchMeaningOffline(request, result, sendResponse){
 
     const url = fetchUrl(lang, word, countryCode);
 
-    // console.log(`got ${word} from local storage`)
+    console.log(`got ${word} from local storage`)
 
     return {
         [word]:{
