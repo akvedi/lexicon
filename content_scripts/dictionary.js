@@ -3,12 +3,13 @@ let DEFAULT_LANGUAGE = 'en',
     DEFAULT_TRIGGER_KEY = 'none',
     SEARCHWORD,
     SUPPORTED_LANGUAGE,
-    COUNTRY_CODE = { "en": "UK", "en-us": "US", "fr": "FR", "de": "DE", "es": "ES", "hi": "IN", "pt": "PT", "pt-br": "BR" },
     LANGUAGE,
     NUMOFDEF,
     THEME,
     AUTOPLAY,
     TRIGGER_KEY;
+
+const COUNTRY_CODE = { "en": "UK", "en-us": "US", "fr": "FR", "de": "DE", "es": "ES", "hi": "IN", "pt": "PT", "pt-br": "BR" };
 //End var
 
 /**

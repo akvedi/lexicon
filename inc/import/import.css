@@ -1,0 +1,67 @@
+
+body, main{
+    background: #eee;
+}
+
+button, input, div#def{
+    cursor: pointer;
+}
+
+main{
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+}
+#result, #upload, #progress{
+    padding: 30px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    background: #fff;
+
+}
+
+#upload{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap:2rem;
+    
+    input{
+        display:inline;
+        width: max-content;
+    }
+
+}
+button{
+    width: max-content;
+    border: 0;
+    border-radius: 5px;
+    background: #444499;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+#progress{
+    display: none;
+
+
+
+    #uploading, #reading{
+        display: none;
+    }
+}
+
+#result{
+    margin: auto;
+    #definitions{
+        background: skyblue;
+    }
+
+    #final-save{
+
+        #replace{
+            background: darkred;
+        }
+    }
+    
+}

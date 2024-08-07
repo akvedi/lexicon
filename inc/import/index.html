@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Definitions</title>
+    <link rel="stylesheet" href="import.css">
+    <script defer src="import.js"></script>
+</head>
+<body>
+    <main>
+
+        <div id="upload">
+            <label for="upload-backup">Choose the backup file</label>
+            <input type="file" name="upload-backup" id="upload-backup">
+            <button type="submit">Upload</button>
+        </div>
+        <div id="progress">
+            <p id="uploading">Uploading file</p>
+            <p id="reading">Reading file</p>
+        </div>
+        <div id="result">
+            <h1>Here are the valid definitions found in the backup file</h1>
+
+            <div id="final-save">
+                <p>How would you like to save it</p>
+                <div id="save-btn">
+                    <button id="merge">Merge</button>
+                    <button id="replace">Replace</button>
+                </div>
+            </div>          
+        </div>
+    </main>
+</body>
+</html>
