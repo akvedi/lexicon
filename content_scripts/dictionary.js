@@ -19,11 +19,11 @@ const COUNTRY_CODE = { "en": "UK", "en-us": "US", "fr": "FR", "de": "DE", "es": 
     */
 function showMeaning(event) {
     let info = getSelectionInfo(event);
-    let createdDiv = createDiv(info); // Create the popup div while meaning is being retrieved
 
     if (!info) { return; }
-
     SEARCHWORD = (info.word).toLowerCase(); // set the global variable
+
+    let createdDiv = createDiv(info); // Create the popup div while meaning is being retrieved
 
     //Todo: Show a Google search for phrases if selection is more than 2 words
     // if(SEARCHWORD.split(" ").length > 2) { return; } // show a google search for phrases
@@ -323,7 +323,7 @@ function removeMeaning(event) {
 }
 
 /**
-* Add event listner to show meaning of double click
+* Add event listner for double click
 * @kind event
 */
 document.addEventListener('dblclick', ((e) => {
