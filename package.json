@@ -8,5 +8,13 @@
     "lint": "web ext lint",
     "dev": "web-ext run --firefox"
     
+  },
+  "webExt": {
+    "ignoreFiles": [
+      "package.json",
+      "pnpm-lock.yaml",
+      "CONTRIBUTORS.md",
+      "temp"
+    ]
   }
 }
