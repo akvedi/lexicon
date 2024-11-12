@@ -1,5 +1,6 @@
 ## Changelog 1.6.7
 - Fixed a bug where last looked up word showed while looking up new word
+- Some UI Improvments
 
 ## Changelog 1.6.6
 
