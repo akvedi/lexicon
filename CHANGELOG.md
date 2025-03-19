@@ -1,4 +1,4 @@
-## Changelog 1.6.8
+## Changelog 1.7.0
 - Dictionay is working again
 - Change from Google to Bing
 

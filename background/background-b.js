@@ -94,7 +94,7 @@ function fetchUrl(lang, word, countryCode){
 function extractMeaning (document, context){
     if (!document.querySelector(".WordContainer")) {return null; }
     
-    let word = document.querySelector('.header_pron [role="heading"]').textContent,
+    let word = document.querySelector('.WordContainer [role="heading"]').textContent,
         definitionDiv = document.querySelector(".b_dList").children,
         meaningJson = {},
         j = 1;
@@ -112,7 +112,7 @@ function extractMeaning (document, context){
     }
 
     let audio = document.querySelector(".WordContainer audio") && document.querySelector(".WordContainer audio").src;
-    let audioSrc = audio && audio.replace('moz-extension://0f9c5cef-3c50-49be-a76f-1bd20b6d8724', "https://bing.com");
+    let audioSrc = audio && "https://bing.com" + audio.substring(audio.indexOf('/th'))
 
     if(audioSrc){
         !audioSrc.includes("http") && (audioSrc = audioSrc.replace("//", "https://"));

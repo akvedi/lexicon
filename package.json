@@ -1,13 +1,12 @@
 {
   "devDependencies": {
-    "web-ext": "^7.6.2"
+    "web-ext": "^7.12.0"
   },
   "scripts": {
     "build": "web-ext build --overwrite-dest",
     "android": "web-ext run --target=firefox-android --android-device=R9ZX508C43Y",
     "lint": "web-ext lint",
     "dev": "web-ext run --firefox"
-    
   },
   "webExt": {
     "ignoreFiles": [
