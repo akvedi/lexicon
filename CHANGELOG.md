@@ -1,3 +1,7 @@
+## Changelog 1.6.8
+- Dictionay is working again
+- Change from Google to Bing
+
 ## Changelog 1.6.7
 - Fixed a bug where last looked up word showed while looking up new word
 - Some UI Improvments

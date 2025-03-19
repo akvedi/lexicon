@@ -3,7 +3,7 @@
 
   "manifest_version": 2,
   "name": "Lexicon",
-  "version": "1.6.7",
+  "version": "1.6.8",
 
   "description": "Quickly Define Words While You Browse By Just Double Clicking On The Word",
 
@@ -33,7 +33,7 @@
   "background": {
     "scripts": [
       "common/browser-polyfill.js",
-      "background/background.js"
+      "background/background-b.js"
     ],
     "persistent": false
   },
@@ -41,6 +41,7 @@
   "permissions": [
     "storage",
     "https://www.google.com/",
+    "https://www.bing.com/",
     "contextMenus",
     "activeTab"
   ],

@@ -15,8 +15,9 @@ main{
 #result, #upload, #progress{
     padding: 30px;
     margin: 20px auto;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     background: #fff;
+    border-radius: 5px;
 
 }
 

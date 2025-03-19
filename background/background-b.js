@@ -1,5 +1,4 @@
-const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
-    DEFAULT_HISTORY_SETTING = {enabled: true};
+const DEFAULT_HISTORY_SETTING = {enabled: true};
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
@@ -25,9 +24,7 @@ async function fetchMeaningOnline(request){
     let { word, lang, numOfDef, countryCode } = request;
     let url = fetchUrl(lang, word, countryCode);
 
-
     let headers = new Headers({
-        'Host': 'www.google.com',
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/5.0; AS; rv:9.0) like Gecko',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       });
@@ -58,6 +55,9 @@ function fetchMeaningOffline(request, result, sendResponse){
     let { word, lang, countryCode } = request;
 
     const url = fetchUrl(lang, word, countryCode);
+
+    // console.log(`got ${word} from local storage`)
+
     return {
         [word]:{
             ...result
@@ -77,9 +77,11 @@ function fetchUrl(lang, word, countryCode){
     let url = '';
     let define = {"en":"define", "en-us":"define", "fr":"définir", "de":"definieren", "es":"definir", "pt":"definir", "pt-br":"definir"};
     if(lang == "hi"){
-       return url = `https://www.google.com/search?hl=hi&q=${word}+मतलब&gl=IN`;
+       return url = `https://www.bing.com/search?hl=hi&q=${word}+मतलब&cc=IN`;
     }
-    return url = `https://www.google.com/search?hl=${lang}&q=${define[lang]}+${word.replace(/·/g, '')}&gl=${countryCode}`;
+    // return url = `https://www.google.com/search?hl=${lang}&q=${define[lang]}+${word.replace(/·/g, '')}&gl=${countryCode}`;
+    return url = `https://www.bing.com/search?q=${define[lang]}+${word.replace(/·/g, '')}&cc=${countryCode}`;
+    
 
 }
 
@@ -90,54 +92,30 @@ function fetchUrl(lang, word, countryCode){
  * @returns 
  */
 function extractMeaning (document, context){
-    if (!document.querySelector("[data-dobid='hdw']")) {return null; }
+    if (!document.querySelector(".WordContainer")) {return null; }
     
-    let word = document.querySelector("[data-dobid='hdw']").textContent,
-        definitionDiv = document.querySelectorAll("div[data-dobid='dfn']"),
+    let word = document.querySelector('.header_pron [role="heading"]').textContent,
+        definitionDiv = document.querySelector(".b_dList").children,
         meaningJson = {},
-        j =1 ;
+        j = 1;
 
-    let type = document.querySelector('div[class~="YrbPuc"]').textContent || "";
+    let type = document.querySelector(".dc_lbl.dc_lowerpos").textContent || "";
     // get the language from the dictionary to aviod saving wrong language
-    let fetchedlang = JSON.parse(document.querySelector('div[data-bkt=dictionary]').dataset.maindata)[13][7][1][1].toLowerCase(); 
+    let fetchedlang = "";
 
     if(definitionDiv){
-        definitionDiv.forEach((def)=>{
-            let span = def.querySelectorAll("span");
-
-            //loop over span, extract the innerText and join it to make single string and add it to meaningJson
-            let defnition = "";
-            for(let i = 0; i < span.length; i++){
-                if(!span[i].querySelector("sup")){
-                    defnition += (span[i].innerHTML).replace(/(<([^>]+)>)/ig, "");
-                }
-            }
-            meaningJson[`meaning${j}`] =  defnition;
+        Object.keys(definitionDiv).forEach(key => {
+            let def = definitionDiv[key].querySelector(".b_promtxt").textContent;
+            meaningJson[`meaning${j}`] =  def.replace(/:/g, '');
             j++;
-        });
+        })
     }
 
-
-    let audio = document.querySelector("audio[jsname='QInZvb']"),
-        source = document.querySelector("audio[jsname='QInZvb'] source"),
-        audioSrc = source && source.getAttribute('src');
+    let audio = document.querySelector(".WordContainer audio") && document.querySelector(".WordContainer audio").src;
+    let audioSrc = audio && audio.replace('moz-extension://0f9c5cef-3c50-49be-a76f-1bd20b6d8724', "https://bing.com");
 
     if(audioSrc){
         !audioSrc.includes("http") && (audioSrc = audioSrc.replace("//", "https://"));
-    }
-    else if (audio) {
-        let exactWord = word.replace(/·/g, ''), // We do not want syllable seperator to be present.
-            
-        queryString = new URLSearchParams({
-            text: exactWord,
-            enc: 'mpeg',
-            lang: context.lang,
-            speed: '0.4',
-            client: 'lr-language-tts',
-            use_google_only_voices: 1
-        }).toString();
-
-        audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
     
     let cleanedWord = word.replace(/·/g, '').toLowerCase();  // Remove the . from the word
@@ -148,7 +126,7 @@ function extractMeaning (document, context){
             word : cleanedWord,
             type : type,
             audioSrc : audioSrc,
-            lang : fetchedlang
+            lang : context.lang
         },
         url : context.url,
         word :word,
@@ -157,6 +135,7 @@ function extractMeaning (document, context){
     
     return obj;
 };
+
 
 /**
  * 
