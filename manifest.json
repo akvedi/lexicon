@@ -33,7 +33,7 @@
   "background": {
     "scripts": [
       "common/browser-polyfill.js",
-      "background/background-b.js"
+      "background/background.js"
     ],
     "persistent": false
   },

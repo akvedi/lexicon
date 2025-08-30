@@ -51,13 +51,14 @@ function saveOptions(e) {
  */ 
 function restoreOptions() {
     let storageItem = browser.storage.sync.get();
+    let storageLocal = browser.storage.local.get();
 
     storageItem.then((results) => {
         let language = results.language,
             interaction = results.interaction || {},
             history = results.history || { enabled: IS_HISTORY_ENABLED_BY_DEFAULT },
             theme = results.theme,
-            numOfDef = results.numOfDef;
+            numOfDef = results.numOfDef,
             autoplay = results.autoplay;
 
 
@@ -76,13 +77,24 @@ function restoreOptions() {
 
         // Restore history setting
         document.querySelector("#store-history-checkbox").checked = history.enabled;
-        document.querySelector("#num-words-in-history").innerText = results.totalWords || 0;
+       
         
         //Restore theme setting
         document.querySelector("#theme-selector").value = theme || DEFAULT_THEME;
 
         // Load dark mode css if theme is set to dark
         loadTheme(theme);
+    })
+    .catch(error => {
+        console.error("Error retrieving sync storage:", error);
+    });
+
+
+    storageLocal.then(res => {
+        document.querySelector("#num-words-in-history").innerText = res.totalWords || 0;
+    })
+    .catch(error => {
+        console.error("Error retrieving local storage:", error);
     });
 }
 

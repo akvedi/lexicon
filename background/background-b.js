@@ -56,8 +56,6 @@ function fetchMeaningOffline(request, result, sendResponse){
 
     const url = fetchUrl(lang, word, countryCode);
 
-    // console.log(`got ${word} from local storage`)
-
     return {
         [word]:{
             ...result
